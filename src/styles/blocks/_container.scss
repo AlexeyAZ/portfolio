@@ -1,0 +1,9 @@
+.container {
+	border: 1px solid black;
+	max-width: $max-width;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: $container-padding-side-pc;
+	padding-right: $container-padding-side-pc;
+	position: relative;
+}
