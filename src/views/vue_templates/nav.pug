@@ -1,0 +1,4 @@
+script#site-nav(type="text/x-template")
+    nav
+        a(v-for="item in list", :href="item.href", @click.prevent="setLocation(item)").
+            {{ item.name }}

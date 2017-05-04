@@ -12,20 +12,28 @@
   <body>
     <div class="wrapper" id="app">
       <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none;"></svg>
-      <!--header.header
-      div.container.header__container
-      	nav.header__nav
-      		a(href="").header__nav-item.
-      			Обо мне
-      		a(href="").header__nav-item.
-      			Портфолио
-      -->
-      <site-header></site-header>
+      <header class="header">
+        <div class="container header__container">
+          <site-nav :list="items"></site-nav>
+        </div>
+      </header>
       <div class="content">
-        <div class="container content__container"></div>
+        <div class="container content__container">
+          <page-main v-if="location.main" :list="1"></page-main>
+          <page-gallery v-if="location.gallery" :list="1"></page-gallery>
+        </div>
       </div>
       <footer class="footer"></footer>
     </div>
+    <script id="site-nav" type="text/x-template">
+      <nav><a v-for="item in list" :href="item.href" @click.prevent="setLocation(item)">{{ item.name }}</a></nav>
+    </script>
+    <script id="page-main" type="text/x-template">
+      <div>{{ list }}</div>
+    </script>
+    <script id="page-gallery" type="text/x-template">
+      <div>{{ list }}</div>
+    </script>
     <script src="scripts/vendor.js"></script>
     <script src="scripts/app.js"></script>
   </body>
