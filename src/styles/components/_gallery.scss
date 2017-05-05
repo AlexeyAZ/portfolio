@@ -1,0 +1,18 @@
+.gallery {
+	transition: $content-trans;
+    transform-origin: left top;
+    border: 1px solid black;
+
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &__list-item {
+        transition: $content-trans;
+        border: 1px solid black;
+        display: block;
+        height: 200px;
+        width: 25%;
+    }
+}

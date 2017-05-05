@@ -1,3 +1,12 @@
-header.header
-	div.container.header__container
-		site-nav(:list="items")
+header(@mouseover="headerMouseover" @mouseout="headerMouseout").header
+	div().header__title
+		div.header__title-letter.
+			m
+		div.header__title-letter.
+			e
+		div.header__title-letter.
+			n
+		div.header__title-letter.
+			u
+	nav().header__nav.nav
+		component(is="site-nav", v-for="(item, index) in links", :link="item", @link_click="renderLocation", :key="item")

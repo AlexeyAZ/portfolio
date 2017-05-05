@@ -1,8 +1,14 @@
 $(function () {
 
     Vue.component("site-nav", {
-        props: ["list"],
-        template: '#site-nav'
+        props: ["list", "link"],
+        template: '#site-nav',
+        methods: {
+
+            setLocation: function () {
+                this.$emit("link_click", this.link.location);
+            }
+        }
     });
 
     Vue.component("page-main", {
@@ -15,15 +21,12 @@ $(function () {
         template: '#page-gallery'
     });
 
-    let app = new Vue({
+    var app = new Vue({
         el: "#app",
         data: {
-            parentMessage: "",
-            location: {
-                main: true,
-                gallery: false
-            },
-            items: [{
+            appLocation: "main",
+            contentMove: true,
+            links: [{
                 name: "Main",
                 href: "http://",
                 location: "main"
@@ -31,12 +34,29 @@ $(function () {
                 name: "Gallery",
                 href: "http://",
                 location: "gallery"
+            }],
+            sites: [{
+                name: "site1",
+                href: "http://",
+                imgsrc: "img/img.jpg"
             }]
         },
 
         methods: {
-            setLocation: function (item) {
-                this.location[item.location] = true;
+
+            renderLocation: function (location) {
+                console.log(location);
+                this.appLocation = location;
+            },
+
+            headerMouseover: function () {
+                this.contentMove = !this.contentMove;
+                console.log(this.contentMove);
+            },
+
+            headerMouseout: function () {
+                this.contentMove = !this.contentMove;
+                console.log(this.contentMove);
             }
         }
     });

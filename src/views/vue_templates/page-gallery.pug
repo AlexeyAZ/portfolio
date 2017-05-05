@@ -1,3 +1,4 @@
 script#page-gallery(type="text/x-template")
-    div.
-        {{ list }}
+    div.gallery
+        div.gallery__list
+            a(v-for="(item, index) in 10" :href="item.href").gallery__list-item

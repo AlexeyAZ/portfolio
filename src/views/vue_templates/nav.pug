@@ -1,4 +1,4 @@
 script#site-nav(type="text/x-template")
-    nav
-        a(v-for="item in list", :href="item.href", @click.prevent="setLocation(item)").
-            {{ item.name }}
+    div
+        a(:href="link.href" @click.prevent="setLocation" :location="link.location").nav__link.
+            {{ link.name }}
