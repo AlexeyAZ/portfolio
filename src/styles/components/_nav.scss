@@ -1,7 +1,29 @@
 .nav {
 
     &__link {
-        color: black;
+        transition: $content-trans;
+        color: white;
+        font-size: 24px;
+        display: block;
         text-decoration: none;
+
+        @for $i from 1 through 10 {
+
+            &:nth-child(#{$i}) {
+                transform: translate((-100% - 20% * $i), 0);
+            }
+        }
+
+        &:hover {
+            padding-left: 20px;
+        }
+
+        &_active {
+            font-size: 30px;
+
+            &:hover {
+                padding-left: 0;
+            }
+        }
     }
 }

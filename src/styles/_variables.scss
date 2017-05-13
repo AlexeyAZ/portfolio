@@ -3,8 +3,12 @@ $content-trans: all 0.8s ease;
 $header-title-letter-time: 0.8s;
 
 $header-width: 100px;
+$header-full-width: 200px;
+$header-border-offset: 10px;
 $content-width: calc(100% - #{$header-width});
 
 $container-padding-side-pc: 30px;
 
 $max-width: calc(1024px + 2*#{$container-padding-side-pc});
+
+$gallery-list-link-size: 40px;

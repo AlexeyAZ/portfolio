@@ -1,0 +1,4 @@
+script#site-nav(type="text/x-template")
+    nav.nav
+        a(v-for="item in list" :href="item.href" @click.prevent="setLocation(item)" :location="item.location" :class="navlocation == item.location ? 'nav__link_active' : ''").nav__link.
+            {{ item.name }}

@@ -1,5 +1,4 @@
 div(:class="contentMove ? '' : 'content_move'").content
-    //div.container.content__container
     transition(name="move" mode="out-in")
-        component(v-if="appLocation == 'main'" is="page-main")
-        component(v-else is="page-gallery" :list="sites")
+        page-main(v-if="appLocation == 'main'")
+        page-gallery(v-else)

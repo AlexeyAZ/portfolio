@@ -2,17 +2,135 @@
 	transition: $content-trans;
     transform-origin: left top;
     border: 1px solid black;
+    overflow: hidden;
+    height: 100%;
+
+    &:hover {
+
+        .gallery__list-item {
+
+            &:before {
+                //opacity: 1;
+            }
+            
+            &:hover {
+
+                &:before {
+                    //opacity: 0;
+                }
+            }
+        }
+    }
 
     &__list {
         display: flex;
+        align-content: flex-start;
         flex-wrap: wrap;
+        overflow: auto;
+        height: 100%;
     }
 
     &__list-item {
         transition: $content-trans;
-        border: 1px solid black;
+        //border: 1px solid black;
         display: block;
-        height: 200px;
-        width: 25%;
+        overflow: hidden;
+        position: relative;
+        height: 300px;
+        width: calc(100% / 3);
+
+        &:before,
+        &:after {
+            transition: $content-trans;
+            content: "";
+            opacity: 1;
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        &:before {
+            //background-image: linear-gradient(to top, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.3) 100%);
+            background-color: rgba(0,0,0,0.4);
+            z-index: 2;
+        }
+
+        &:after {
+            transform: translateY(50%);
+            background-image: linear-gradient(to top, rgba(0,0,0,0.4) 5%, rgba(0,0,0,0.3) 15%, rgba(0,0,0,0.2) 25%, rgba(0,0,0,0.0) 35%, rgba(0,0,0,0.0) 100%);
+            //background-image: linear-gradient(to top, rgba(0,0,0,0.5) 10%, rgba(0,0,0,0.4) 15%, transparent 100%);
+            //background-color: rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        &:hover {
+            box-shadow: 0 0 5px black;
+
+            &:before {
+                opacity: 0;
+            }
+
+            &:after {
+                transform: translateY(0);
+                //opacity: 0;
+            }
+
+            .gallery__list-link {
+                transform: translateX(0);
+                opacity: 1;
+
+                &:hover {
+                    transform: translateX(0) scale(1.1);
+                }
+            }
+
+            .gallery__list-link_git {
+
+                &:before {
+                    transform: translateY(-50%) rotate(0);
+                }
+            }
+        }
+    }
+
+    &__list-sitelink {
+        background-size: cover;
+        background-repeat: no-repeat;
+        display: block;
+        height: 100%;
+    }
+
+    &__list-link {
+        transition: $content-trans;
+        transform: translateX(-10px);
+        background-size: cover;
+        background-repeat: no-repeat;
+        border-radius: 50%;
+        opacity: 0;
+        position: absolute;
+        left: 20px;
+        bottom: 20px;
+        height: $gallery-list-link-size;
+        width: $gallery-list-link-size;
+        z-index: 2;
+
+        &:before {
+            transition: $content-trans;
+            transform: translateY(-90%) rotate(-20deg);
+            transform-origin: 0 0;
+            content: "Git";
+            text-shadow: 0 0 4px black;
+            color: white;
+            position: absolute;
+            left: calc(100% + 5px);
+            top: 50%;
+        }
+
+        &_git {
+            background-image: url("https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png");
+        }
     }
 }

@@ -19,28 +19,29 @@
           <div class="header__title-letter">n</div>
           <div class="header__title-letter">u</div>
         </div>
-        <nav class="header__nav nav">
-          <component is="site-nav" v-for="(item, index) in links" :link="item" @link_click="renderLocation" :key="item"></component>
-        </nav>
+        <div class="header__nav">
+          <site-nav :list="links" @link_click="renderLocation" :navlocation="appLocation"></site-nav>
+        </div>
       </header>
       <div class="content" :class="contentMove ? '' : 'content_move'">
-        <!--div.container.content__container-->
         <transition name="move" mode="out-in">
-          <component v-if="appLocation == 'main'" is="page-main"></component>
-          <component v-else is="page-gallery" :list="sites"></component>
+          <page-main v-if="appLocation == 'main'"></page-main>
+          <page-gallery v-else></page-gallery>
         </transition>
       </div>
       <footer class="footer"></footer>
     </div>
     <script id="site-nav" type="text/x-template">
-      <div><a class="nav__link" :href="link.href" @click.prevent="setLocation" :location="link.location">{{ link.name }}</a></div>
+      <nav class="nav"><a class="nav__link" v-for="item in list" :href="item.href" @click.prevent="setLocation(item)" :location="item.location" :class="navlocation == item.location ? 'nav__link_active' : ''">{{ item.name }}</a></nav>
     </script>
     <script id="page-main" type="text/x-template">
       <div>main</div>
     </script>
     <script id="page-gallery" type="text/x-template">
       <div class="gallery">
-        <div class="gallery__list"><a class="gallery__list-item" v-for="(item, index) in 10" :href="item.href"></a></div>
+        <div class="gallery__list">
+          <div class="gallery__list-item" v-for="(item, index) in listAr" :style="{height: galleryListHeight + 'px'}"><a class="gallery__list-sitelink" :href="item.href" :style="{'background-image': 'url(' + item.imgsrc + ')'}"></a><a class="gallery__list-link gallery__list-link_git" :href="item.gitlink"></a></div>
+        </div>
       </div>
     </script>
     <script src="scripts/vendor.js"></script>

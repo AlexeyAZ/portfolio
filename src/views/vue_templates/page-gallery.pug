@@ -1,4 +1,6 @@
 script#page-gallery(type="text/x-template")
     div.gallery
         div.gallery__list
-            a(v-for="(item, index) in 10" :href="item.href").gallery__list-item
+            div(v-for="(item, index) in listAr" :style="{height: galleryListHeight + 'px'}").gallery__list-item
+                a(:href="item.href" :style="{'background-image': 'url(' + item.imgsrc + ')'}").gallery__list-sitelink
+                a(:href="item.gitlink").gallery__list-link.gallery__list-link_git
