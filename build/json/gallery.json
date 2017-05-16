@@ -3,24 +3,7 @@
         "name": "site1",
         "href": "http://",
         "imgsrc": "http://web-dev.pw/images/i_shop.jpg",
-        "gitlink": "http://"
-    },
-    {
-        "name": "site1",
-        "href": "http://",
-        "imgsrc": "http://web-dev.pw/images/mail.jpg",
-        "gitlink": "http://"
-    },
-    {
-        "name": "site1",
-        "href": "http://",
-        "imgsrc": "http://web-dev.pw/images/i_shop.jpg",
-        "gitlink": "http://"
-    },
-    {
-        "name": "site1",
-        "href": "http://",
-        "imgsrc": "http://web-dev.pw/images/mail.jpg",
-        "gitlink": "http://"
+        "gitlink": "http://",
+        "imgload": "false"
     }
 ]

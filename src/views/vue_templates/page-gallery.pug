@@ -1,6 +1,10 @@
 script#page-gallery(type="text/x-template")
     div.gallery
+        button(v-on:click="loadImg").gallery__btn.
+            111
         div.gallery__list
             div(v-for="(item, index) in listAr" :style="{height: galleryListHeight + 'px'}").gallery__list-item
-                a(:href="item.href" :style="{'background-image': 'url(' + item.imgsrc + ')'}").gallery__list-sitelink
+                //a(:href="item.href" :style="{'background-image': 'url(' + item.imgsrc + ')'}").gallery__list-sitelink
+                a(:href="item.href").gallery__list-sitelink
+                    img(:src="item.imgload", alt="", :data-src="item.imgsrc").gallery__list-img
                 a(:href="item.gitlink").gallery__list-link.gallery__list-link_git

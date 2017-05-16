@@ -2,7 +2,7 @@
 	transition: $content-trans;
 	perspective: 800px;
 	border: 1px solid black;
-	padding-left: $header-width;
+	padding-left: calc(#{$header-width} - 1px);
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -13,7 +13,7 @@
 		transform: translateX(calc(#{$header-full-width} - #{$header-width}));
 
 		.gallery {
-			transform: rotateY(30deg);
+			//transform: rotateY(30deg);
 		}
 	}
 

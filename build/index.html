@@ -22,6 +22,7 @@
         <div class="header__nav">
           <site-nav :list="links" @link_click="renderLocation" :navlocation="appLocation"></site-nav>
         </div>
+        <div class="header__contacts"></div>
       </header>
       <div class="content" :class="contentMove ? '' : 'content_move'">
         <transition name="move" mode="out-in">
@@ -39,8 +40,11 @@
     </script>
     <script id="page-gallery" type="text/x-template">
       <div class="gallery">
+        <button class="gallery__btn" v-on:click="loadImg">111</button>
         <div class="gallery__list">
-          <div class="gallery__list-item" v-for="(item, index) in listAr" :style="{height: galleryListHeight + 'px'}"><a class="gallery__list-sitelink" :href="item.href" :style="{'background-image': 'url(' + item.imgsrc + ')'}"></a><a class="gallery__list-link gallery__list-link_git" :href="item.gitlink"></a></div>
+          <div class="gallery__list-item" v-for="(item, index) in listAr" :style="{height: galleryListHeight + 'px'}">
+            <!--a(:href="item.href" :style="{'background-image': 'url(' + item.imgsrc + ')'}").gallery__list-sitelink--><a class="gallery__list-sitelink" :href="item.href"><img class="gallery__list-img" :src="item.imgload" alt="" :data-src="item.imgsrc"></a><a class="gallery__list-link gallery__list-link_git" :href="item.gitlink"></a>
+          </div>
         </div>
       </div>
     </script>

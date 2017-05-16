@@ -6,6 +6,7 @@ $(function() {
         methods: {
 
             setLocation: function(item) {
+				console.log(item);
                 this.$emit("link_click", item.location);
             },
         },
@@ -20,16 +21,13 @@ $(function() {
         props: ["list"],
         template: '#page-gallery',
         data: function() {
+
             return {
                 galleryListHeight: 300,
                 listAr: this.list
             }
         },
         mounted: function() {
-            // this.$nextTick(function() {
-            //     window.addEventListener("resize", this.setGalleryListHeight);
-            //     this.setGalleryListHeight();
-            // });
             
             window.addEventListener("resize", this.setGalleryListHeight);
 
@@ -37,7 +35,25 @@ $(function() {
                 'json/gallery.json'
             ).then(
                 function(response) {
-                    this.listAr = response.data;
+					var data = response.data;
+					var item = data[0];
+					var arr = [];
+					arr.push(item);
+					arr.push(item);
+					arr.push(item);
+					arr.push(item);
+					// for (var i = 0; i < 10; i++) {
+
+					// 	for(var j = 0; j < data.length; j++) {
+					// 		arr.push(data[j]);
+					// 	}
+					// }
+
+					// arr.splice(arr.length - 1, 1);
+					
+                    this.listAr = arr;
+
+					
                     this.$nextTick(function() {
                         this.setGalleryListHeight();
                     });
@@ -49,7 +65,21 @@ $(function() {
             setGalleryListHeight: function() {
                 //this.galleryListHeight = (this.$el.clientWidth / 3) / 1.5
                 this.galleryListHeight = document.querySelector(".gallery__list-item").clientWidth / 1.5;
-            }
+            },
+
+			loadImg: function() {
+				var self = this;
+				
+				var img = new Image();
+				img.onload = function () {
+					console.log("image is loaded");
+					console.log(self.listAr[2])
+					self.listAr[2].imgload = "http://www.planwallpaper.com/static/images/Nikon-D810-Image-Sample-6.jpg";
+					self.listAr[3].imgload = "false";
+				}
+				img.src = "http://www.planwallpaper.com/static/images/Nikon-D810-Image-Sample-6.jpg";
+
+			}
         },
         watch: {
 

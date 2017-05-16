@@ -34,7 +34,7 @@
         transition: $content-trans;
         //border: 1px solid black;
         display: block;
-        overflow: hidden;
+        //overflow: hidden;
         position: relative;
         height: 300px;
         width: calc(100% / 3);
@@ -53,20 +53,19 @@
         }
 
         &:before {
-            //background-image: linear-gradient(to top, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.3) 100%);
             background-color: rgba(0,0,0,0.4);
             z-index: 2;
         }
 
         &:after {
             background-image: linear-gradient(to top, rgba(0,0,0,0.4) 5%, rgba(0,0,0,0.3) 15%, rgba(0,0,0,0.2) 20%, rgba(0,0,0,0.0) 25%, rgba(0,0,0,0.0) 100%);
-            border: 1px solid transparent;
             opacity: 0;
             z-index: 1;
         }
 
         &:hover {
             box-shadow: 0 0 5px black;
+            z-index: 2;
 
             &:before {
                 opacity: 0;
@@ -74,7 +73,6 @@
 
             &:after {
                 transform: translateY(0);
-                border: 1px solid rgba(0,0,0,0.5);
                 opacity: 1;
             }
 
@@ -102,6 +100,20 @@
         display: block;
         height: 100%;
     }
+
+    &__list-img {
+        display: block;
+        //opacity: 0;
+        //visibility: hidden;
+        min-height: 100%;
+        min-width: 100%;
+        height: 100%;
+        width: 100%;
+    }
+
+    //
+    &__btn {}
+    //
 
     &__list-link {
         transition: $content-trans;
