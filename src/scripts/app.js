@@ -24,12 +24,16 @@ $(function() {
 
             return {
                 galleryListHeight: 300,
-                listAr: this.list
+                listAr: this.list,
+                displayHeight: ""
             }
         },
         mounted: function() {
-            
-            window.addEventListener("resize", this.setGalleryListHeight);
+            var self = this;
+
+            window.addEventListener("resize", function() {
+                self.setGalleryListHeight();
+            });
 
             this.$http.get(
                 'json/gallery.json'
@@ -38,10 +42,18 @@ $(function() {
 					var data = response.data;
 					var item = data[0];
 					var arr = [];
-					arr.push(item);
-					arr.push(item);
-					arr.push(item);
-					arr.push(item);
+
+                    for(var i = 0; i < 20; i++) {
+
+                        arr.push({
+                            "name": "site1",
+                            "href": "http://",
+                            "imgsrc": "http://web-dev.pw/images/i_shop.jpg",
+                            "gitlink": "http://",
+                            "imgload": "false",
+                            "visible": "false"
+                        });
+                    }
 					// for (var i = 0; i < 10; i++) {
 
 					// 	for(var j = 0; j < data.length; j++) {
@@ -62,6 +74,10 @@ $(function() {
         },
         methods: {
 
+            getDisplayHeight: function() {
+                //this.displayHeight = 
+            },
+
             setGalleryListHeight: function() {
                 //this.galleryListHeight = (this.$el.clientWidth / 3) / 1.5
                 this.galleryListHeight = document.querySelector(".gallery__list-item").clientWidth / 1.5;
@@ -75,11 +91,20 @@ $(function() {
 					console.log("image is loaded");
 					console.log(self.listAr[2])
 					self.listAr[2].imgload = "http://www.planwallpaper.com/static/images/Nikon-D810-Image-Sample-6.jpg";
-					self.listAr[3].imgload = "false";
 				}
 				img.src = "http://www.planwallpaper.com/static/images/Nikon-D810-Image-Sample-6.jpg";
+			},
 
-			}
+            checkVisible: function(e) {
+
+                var screenH = document.documentElement.clientHeight;
+                console.log(e.target.scrollTop);
+                console.log(screenH);
+
+                for (var i = 0; i < this.listAr.length; i++) {
+
+                }
+            }
         },
         watch: {
 
