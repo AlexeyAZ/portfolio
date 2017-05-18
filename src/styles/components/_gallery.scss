@@ -22,6 +22,15 @@
         }
     }
 
+    &__system {
+        background-color: rgba(0,0,0,0.6);
+        color: white;
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 10;
+    }
+
     &__list {
         display: flex;
         align-content: flex-start;

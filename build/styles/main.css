@@ -163,6 +163,13 @@ body {
   border: 1px solid black;
   overflow: hidden;
   height: 100%; }
+  .gallery__system {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 10; }
   .gallery__list {
     display: -ms-flexbox;
     display: flex;

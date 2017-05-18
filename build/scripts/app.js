@@ -25,9 +25,12 @@ $(function () {
             return {
                 galleryListHeight: 300,
                 listAr: this.list,
-                displayHeight: ""
+                galleryColumn: 3,
+                galleryScrollTop: 0,
+                galleryHeight: null
             };
         },
+
         mounted: function () {
             var self = this;
 
@@ -47,8 +50,9 @@ $(function () {
                         "href": "http://",
                         "imgsrc": "http://web-dev.pw/images/i_shop.jpg",
                         "gitlink": "http://",
-                        "imgload": "false",
-                        "visible": "false"
+                        "imgload": "http://web-dev.pw/images/i_shop.jpg",
+                        "visible": "false",
+                        "top": "0"
                     });
                 }
                 // for (var i = 0; i < 10; i++) {
@@ -64,10 +68,36 @@ $(function () {
 
                 this.$nextTick(function () {
                     this.setGalleryListHeight();
+                    this.setGalleryItemHeightAttr();
+                    this.galleryHeight = this.$el.querySelector(".gallery__list").scrollHeight;
                 });
             });
         },
         methods: {
+
+            setTop: function (item) {
+                if (item.top - this.galleryScrollTop < document.documentElement.clientHeight && item.visible === "false") {
+                    return item.imgload;
+                } else {
+                    return false;
+                }
+            },
+
+            setGalleryItemHeightAttr: function () {
+                var coef = 1;
+                var height = 1;
+
+                for (var i = 0; i < this.listAr.length; i++) {
+
+                    if (i % this.galleryColumn === 0) {
+                        coef++;
+                    }
+
+                    height = this.galleryListHeight * (coef - 1);
+                    this.listAr[i].top = height;
+                    console.log(height);
+                }
+            },
 
             getDisplayHeight: function () {
                 //this.displayHeight = 
@@ -92,10 +122,10 @@ $(function () {
 
             checkVisible: function (e) {
 
-                var screenH = document.documentElement.clientHeight;
-                console.log(e.target.scrollTop);
-                console.log(screenH);
-
+                this.galleryScrollTop = e.target.scrollTop;
+                console.log(this.galleryScrollTop);
+                console.log("scroll-height: " + this.$el.querySelector(".gallery__list").scrollHeight);
+                this.galleryHeight = this.$el.querySelector(".gallery__list").scrollHeight;
                 for (var i = 0; i < this.listAr.length; i++) {}
             }
         },
