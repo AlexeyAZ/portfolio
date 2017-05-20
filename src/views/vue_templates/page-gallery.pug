@@ -1,5 +1,5 @@
 script#page-gallery(type="text/x-template")
-    div(:height="galleryHeight").gallery
+    div.gallery
         div.gallery__system
             div.gallery__system-info.
                 scroll-top: {{ galleryScrollTop }}
@@ -7,10 +7,8 @@ script#page-gallery(type="text/x-template")
                 display-height: {{ document.documentElement.clientHeight }}
             div.gallery__system-info.
                 scroll-height: {{ galleryHeight }}
-        //button(@click="loadImg").gallery__btn.
-            111
         div(@scroll="checkVisible").gallery__list
-            div(v-for="(item, index) in listAr", :top="item.top", :style="{height: galleryListHeight + 'px'}").gallery__list-item
-                a(:href="item.href").gallery__list-sitelink
-                    img(:src="setTop(item)", alt="", :data-src="item.imgsrc").gallery__list-img
+            div(v-for="(item, index) in listAr", :style="{height: galleryListHeight + 'px',width: 'calc(100% /' + galleryColumn + ')'}").gallery__list-item
+                a(:href="item.href", :class="item.imgload == 'false' ? '' : 'gallery__list-sitelink_load'").gallery__list-sitelink
+                    img(:src="item.imgload", alt="", :data-src="item.imgsrc").gallery__list-img
                 a(:href="item.gitlink").gallery__list-link.gallery__list-link_git

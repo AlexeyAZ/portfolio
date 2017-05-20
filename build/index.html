@@ -39,16 +39,14 @@
       <div>main</div>
     </script>
     <script id="page-gallery" type="text/x-template">
-      <div class="gallery" :height="galleryHeight">
+      <div class="gallery">
         <div class="gallery__system">
           <div class="gallery__system-info">scroll-top: {{ galleryScrollTop }}</div>
           <div class="gallery__system-info">display-height: {{ document.documentElement.clientHeight }}</div>
           <div class="gallery__system-info">scroll-height: {{ galleryHeight }}</div>
         </div>
-        <!--button(@click="loadImg").gallery__btn.111
-        -->
         <div class="gallery__list" @scroll="checkVisible">
-          <div class="gallery__list-item" v-for="(item, index) in listAr" :top="item.top" :style="{height: galleryListHeight + 'px'}"><a class="gallery__list-sitelink" :href="item.href"><img class="gallery__list-img" :src="setTop(item)" alt="" :data-src="item.imgsrc"></a><a class="gallery__list-link gallery__list-link_git" :href="item.gitlink"></a></div>
+          <div class="gallery__list-item" v-for="(item, index) in listAr" :style="{height: galleryListHeight + 'px',width: 'calc(100% /' + galleryColumn + ')'}"><a class="gallery__list-sitelink" :href="item.href" :class="item.imgload == 'false' ? '' : 'gallery__list-sitelink_load'"><img class="gallery__list-img" :src="item.imgload" alt="" :data-src="item.imgsrc"></a><a class="gallery__list-link gallery__list-link_git" :href="item.gitlink"></a></div>
         </div>
       </div>
     </script>
