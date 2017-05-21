@@ -8,7 +8,7 @@ script#page-gallery(type="text/x-template")
             div.gallery__system-info.
                 scroll-height: {{ galleryHeight }}
         div(@scroll="checkVisible").gallery__list
-            div(v-for="(item, index) in listAr", :style="{height: galleryListHeight + 'px',width: 'calc(100% /' + galleryColumn + ')'}").gallery__list-item
-                a(:href="item.href", :class="item.imgload == 'false' ? '' : 'gallery__list-sitelink_load'").gallery__list-sitelink
+            div(v-for="(item, index) in listAr", :top="item.top", :style="{height: galleryItemSize.height + 'px',width: galleryItemSize.width + '%'}").gallery__list-item
+                a(@click.prevent="" :href="item.href", :class="JSON.parse(item.visible) === true ? 'gallery__list-sitelink_load' : ''").gallery__list-sitelink
                     img(:src="item.imgload", alt="", :data-src="item.imgsrc").gallery__list-img
                 a(:href="item.gitlink").gallery__list-link.gallery__list-link_git

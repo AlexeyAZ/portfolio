@@ -46,7 +46,7 @@
           <div class="gallery__system-info">scroll-height: {{ galleryHeight }}</div>
         </div>
         <div class="gallery__list" @scroll="checkVisible">
-          <div class="gallery__list-item" v-for="(item, index) in listAr" :style="{height: galleryListHeight + 'px',width: 'calc(100% /' + galleryColumn + ')'}"><a class="gallery__list-sitelink" :href="item.href" :class="item.imgload == 'false' ? '' : 'gallery__list-sitelink_load'"><img class="gallery__list-img" :src="item.imgload" alt="" :data-src="item.imgsrc"></a><a class="gallery__list-link gallery__list-link_git" :href="item.gitlink"></a></div>
+          <div class="gallery__list-item" v-for="(item, index) in listAr" :top="item.top" :style="{height: galleryItemSize.height + 'px',width: galleryItemSize.width + '%'}"><a class="gallery__list-sitelink" @click.prevent="" :href="item.href" :class="JSON.parse(item.visible) === true ? 'gallery__list-sitelink_load' : ''"><img class="gallery__list-img" :src="item.imgload" alt="" :data-src="item.imgsrc"></a><a class="gallery__list-link gallery__list-link_git" :href="item.gitlink"></a></div>
         </div>
       </div>
     </script>

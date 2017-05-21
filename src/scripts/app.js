@@ -22,12 +22,16 @@ Vue.component("page-gallery", {
     data: function() {
 
         return {
-            galleryListHeight: 300,
             listAr: this.list,
-            galleryColumn: 1,
+            galleryColumn: 2,
             galleryScrollTop: 0,
             galleryHeight: null,
-            galleryRowShow: 1
+            galleryRowShow: 1,
+			galleryItemSize: {
+				height: null,
+				width: null
+			},
+			imgCloudUrl: "https://api.imgur.com/3/image/"
         }
     },
     
@@ -35,7 +39,7 @@ Vue.component("page-gallery", {
         var self = this;
 
         window.addEventListener("resize", function() {
-            self.setGalleryListHeight();
+            self.setgalleryItemSize();
         });
 
         this.$http.get(
@@ -43,7 +47,6 @@ Vue.component("page-gallery", {
         ).then(
             function(response) {
                 var data = response.data;
-                var item = data[0];
                 var arr = [];
 
                 for(var i = 0; i < 100; i++) {
@@ -55,16 +58,16 @@ Vue.component("page-gallery", {
                         "gitlink": "http://",
                         "imgload": "false",
                         "visible": "false",
-                        "top": "0"
+                        "top": "0",
+						"imgid": "aT2HpJA"
                     });
                 }
                 
-                this.listAr = data;
+                this.listAr = arr;
 
                 
                 this.$nextTick(function() {
-                    this.setGalleryListHeight();
-                    this.setGalleryItemHeightAttr();
+                    this.setgalleryItemSize();
                     this.galleryHeight = this.$el.querySelector(".gallery__list").scrollHeight;
                     this.checkVisible();
                 });
@@ -72,6 +75,12 @@ Vue.component("page-gallery", {
         )
     },
     methods: {
+
+        setgalleryItemSize: function() {
+			this.galleryItemSize.height = document.documentElement.clientHeight / this.galleryColumn;
+			this.galleryItemSize.width = 100 / this.galleryColumn;
+			this.setGalleryItemHeightAttr();
+        },
 
         setGalleryItemHeightAttr: function() {
             var coef = 1;
@@ -83,14 +92,9 @@ Vue.component("page-gallery", {
                     coef++;
                 }
 
-                height = this.galleryListHeight * (coef - 1);
+                height = this.galleryItemSize.height * (coef - 1);
                 this.listAr[i].top = height;
-                console.log(height);
-            }
-        },
-
-        setGalleryListHeight: function() {
-            this.galleryListHeight = document.querySelector(".gallery__list-item").clientWidth / 1.5;
+            };
         },
 
         checkVisible: function(e) {
@@ -114,32 +118,35 @@ Vue.component("page-gallery", {
                 }
             }
 
-            for(let i = 1; i <= rows; i++) {
+            for(let i = 0; i < rows; i++) {
                 
-                if ((this.galleryListHeight * i - this.galleryScrollTop) < document.documentElement.clientHeight) {
+                if ((this.galleryItemSize.height * i - this.galleryScrollTop) < document.documentElement.clientHeight) {
                     
                     for (let j = 0; j < this.galleryColumn; j++) {
                         let number = j + coeff;
 
                         if (typeof this.listAr[number] !== "undefined" && this.listAr[number].visible === "false") {
-            
-                            let img = new Image();
-                            img.onload = function () {
-                                self.listAr[number].imgload = self.listAr[number].imgsrc;
+
+							self.$http.get(this.imgCloudUrl + this.listAr[number].imgid, {
+								headers: {'authorization': 'Client-ID 4a3569e2cd8829f'},
+							}).then(function(response){
+								self.listAr[number].imgload = response.body.data.link;
                                 self.listAr[number].visible = "true";
-                            }
-                            img.src = self.listAr[number].imgsrc;
+							}, function(error) {
+								console.log('error');
+							});
+
                         }
                     }
                     coeff += this.galleryColumn;
                 }
             }
-        }
+        },
     },
     watch: {
 
         list: function(val, oldval) {
-            this.setGalleryListHeight();
+            this.setgalleryItemSize();
         }
     }
 });
@@ -162,16 +169,6 @@ var app = new Vue({
             },
         ],
         sites: []
-    },
-
-    mounted: function() {
-        // this.$http.get(
-        //     'json/gallery.json'
-        // ).then(
-        //     function(response) {
-        //         this.createArray(response.data);
-        //     }
-        // )
     },
 
     methods: {

@@ -1,9 +1,6 @@
 .content {
 	transition: $content-trans;
-	perspective: 800px;
-	border: 1px solid black;
-	padding-left: calc(#{$header-width} - 1px);
-	position: absolute;
+	//position: absolute;
 	top: 0;
 	left: 0;
 	height: 100%;

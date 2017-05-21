@@ -23,6 +23,7 @@
     }
 
     &__list-item {
+        //transform: translate3d(0,0,0);
         transition: $content-trans;
         display: block;
         position: relative;

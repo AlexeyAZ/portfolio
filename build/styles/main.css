@@ -50,10 +50,6 @@ body {
 
 .content {
   transition: all 0.8s ease;
-  perspective: 800px;
-  border: 1px solid black;
-  padding-left: calc(100px - 1px);
-  position: absolute;
   top: 0;
   left: 0;
   height: 100%;
