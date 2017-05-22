@@ -1,13 +1,3 @@
-header(@mouseover="headerMouseover" @mouseout="headerMouseout").header
-	div.header__title
-		div.header__title-letter.
-			m
-		div.header__title-letter.
-			e
-		div.header__title-letter.
-			n
-		div.header__title-letter.
-			u
+header.header
 	div.header__nav
-		site-nav(:list="links", @link_click="renderLocation", :navlocation="appLocation")
-	div.header__contacts
+		site-nav(:list="links" @link_click="renderLocation", :navlocation="appLocation")

@@ -2,10 +2,13 @@ $trans: all 0.3s ease;
 $content-trans: all 0.8s ease;
 $header-title-letter-time: 0.8s;
 
+$header-size: 100px;
 $header-width: 100px;
 $header-full-width: 200px;
 $header-border-offset: 10px;
 $content-width: calc(100% - #{$header-width});
+
+$nav-link-size: 20%;
 
 $container-padding-side-pc: 30px;
 

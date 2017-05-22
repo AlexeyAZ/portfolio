@@ -12,17 +12,10 @@
   <body>
     <div class="wrapper" id="app">
       <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none;"></svg>
-      <header class="header" @mouseover="headerMouseover" @mouseout="headerMouseout">
-        <div class="header__title">
-          <div class="header__title-letter">m</div>
-          <div class="header__title-letter">e</div>
-          <div class="header__title-letter">n</div>
-          <div class="header__title-letter">u</div>
-        </div>
+      <header class="header">
         <div class="header__nav">
           <site-nav :list="links" @link_click="renderLocation" :navlocation="appLocation"></site-nav>
         </div>
-        <div class="header__contacts"></div>
       </header>
       <div class="content" :class="contentMove ? '' : 'content_move'">
         <transition name="move" mode="out-in">
@@ -33,20 +26,25 @@
       <footer class="footer"></footer>
     </div>
     <script id="site-nav" type="text/x-template">
-      <nav class="nav"><a class="nav__link" v-for="item in list" :href="item.href" @click.prevent="setLocation(item)" :location="item.location" :class="navlocation == item.location ? 'nav__link_active' : ''">{{ item.name }}</a></nav>
+      <nav class="nav">
+        <transition name="scale"><a class="nav__link" v-for="(item, index) in list" v-if="item.location === navlocation" @click.prevent="setLocation(item, index)">{{ index B3s9X7c2 }}</a></transition>
+      </nav>
     </script>
     <script id="page-main" type="text/x-template">
       <div>main</div>
     </script>
     <script id="page-gallery" type="text/x-template">
       <div class="gallery">
-        <div class="gallery__system">
-          <div class="gallery__system-info">scroll-top: {{ galleryScrollTop }}</div>
-          <div class="gallery__system-info">display-height: {{ document.documentElement.clientHeight }}</div>
-          <div class="gallery__system-info">scroll-height: {{ galleryHeight }}</div>
-        </div>
-        <div class="gallery__list" @scroll="checkVisible">
-          <div class="gallery__list-item" v-for="(item, index) in listAr" :top="item.top" :style="{height: galleryItemSize.height + 'px',width: galleryItemSize.width + '%'}"><a class="gallery__list-sitelink" @click.prevent="" :href="item.href" :class="JSON.parse(item.visible) === true ? 'gallery__list-sitelink_load' : ''"><img class="gallery__list-img" :src="item.imgload" alt="" :data-src="item.imgsrc"></a><a class="gallery__list-link gallery__list-link_git" :href="item.gitlink"></a></div>
+        <!--div.gallery__system
+        div.gallery__system-info.
+            scroll-top: {{ galleryScrollTop }}
+        div.gallery__system-info.
+            display-height: {{ document.documentElement.clientHeight }}
+        div.gallery__system-info.
+            scroll-height: {{ size.list.height }}
+        -->
+        <div class="gallery__list" @scroll="renderGallery">
+          <div class="gallery__list-item" v-for="(item, index) in listAr" :top="item.top" :style="{height: size.item.height + 'px',width: size.item.width + '%'}"><a class="gallery__list-sitelink" @click.prevent="" :href="item.href" :class="JSON.parse(item.visible) === true ? 'gallery__list-sitelink_load' : ''"><img class="gallery__list-img" :src="item.imgload" alt="" :data-src="item.imgsrc"></a><a class="gallery__list-link gallery__list-link_git" :href="item.gitlink"></a></div>
         </div>
       </div>
     </script>

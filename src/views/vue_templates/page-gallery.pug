@@ -1,14 +1,14 @@
 script#page-gallery(type="text/x-template")
     div.gallery
-        div.gallery__system
+        //div.gallery__system
             div.gallery__system-info.
                 scroll-top: {{ galleryScrollTop }}
             div.gallery__system-info.
                 display-height: {{ document.documentElement.clientHeight }}
             div.gallery__system-info.
-                scroll-height: {{ galleryHeight }}
-        div(@scroll="checkVisible").gallery__list
-            div(v-for="(item, index) in listAr", :top="item.top", :style="{height: galleryItemSize.height + 'px',width: galleryItemSize.width + '%'}").gallery__list-item
+                scroll-height: {{ size.list.height }}
+        div(@scroll="renderGallery").gallery__list
+            div(v-for="(item, index) in listAr", :top="item.top", :style="{height: size.item.height + 'px',width: size.item.width + '%'}").gallery__list-item
                 a(@click.prevent="" :href="item.href", :class="JSON.parse(item.visible) === true ? 'gallery__list-sitelink_load' : ''").gallery__list-sitelink
                     img(:src="item.imgload", alt="", :data-src="item.imgsrc").gallery__list-img
                 a(:href="item.gitlink").gallery__list-link.gallery__list-link_git

@@ -1,29 +1,42 @@
 .nav {
+    position: relative;
+    height: 100%;
 
     &__link {
-        transition: $content-trans;
-        color: white;
-        font-size: 24px;
+        transition: $trans;
+        background-color: white;
+        box-shadow: 0 0 10px black;
+        border-radius: 50%;
         display: block;
-        text-decoration: none;
-
-        @for $i from 1 through 10 {
-
-            &:nth-child(#{$i}) {
-                transform: translate((-100% - 20% * $i), 0);
-            }
-        }
-
-        &:hover {
-            padding-left: 20px;
-        }
+        //opacity: 0;
+        position: absolute;
+        top: calc((100% - #{$nav-link-size}) / 2);
+        left: calc((100% - #{$nav-link-size}) / 2);
+        text-align: center;
+        height: $nav-link-size;
+        width: $nav-link-size;
+        z-index: 1;
 
         &_active {
-            font-size: 30px;
-
-            &:hover {
-                padding-left: 0;
-            }
+            opacity: 1;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 2;
         }
     }
+}
+
+.scale-enter-active, .scale-leave-active {
+    transition: $trans;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+}
+.scale-enter, .scale-leave-to {
+    height: 100%;
+    width: 100%;
 }

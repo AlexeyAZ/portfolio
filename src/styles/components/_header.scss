@@ -1,93 +1,18 @@
 .header {
-	background-color: black;
+	border-radius: 50%;
 	transition: $content-trans;
-	color: white;
-	display: none;
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: $header-width;
-	z-index: 1;
-
-	&:before {
-		content: "";
-		border: $header-border-offset solid black;
-		pointer-events: none;
-		position: absolute;
-		top: 0;
-		left: 0;
-		height: 100%;
-		width: 100%;
-		z-index: 2;
-	}
-
-	&:after {
-		content: "";
-		border: 1px solid white;
-		pointer-events: none;
-		position: absolute;
-		top: $header-border-offset;
-		right: $header-border-offset;
-		bottom: $header-border-offset;
-		left: $header-border-offset;
-	}
+	position: fixed;
+	top: 50px;
+	right: 50px;
+	height: $header-size;
+	width: $header-size;
+	z-index: 10;
 
 	&:hover {
-		width: $header-full-width;
 
-		.header__title-letter {
-			transform: translateY(-100vh) rotateY(90deg);
-			opacity: 0;
-		}
-
-		.nav__link {
-			transform: translate(0, 0);
-			opacity: 1;
-		}
-	}
-
-	&__title {
-		user-select: none;
-		transition: $content-trans;
-		transform: translateY(-50%);
-		font-size: 30px;
-		text-align: center;
-		text-transform: uppercase;
-		pointer-events: none;
-		position: absolute;
-		top: 50%;
-		left: 0;
-		width: $header-width;
-	}
-
-	&__title-letter {
-
-		@for $i from 1 through 4 {
-
-			&:nth-child(#{$i}) {
-				transition: all $header-title-letter-time + $i * 0.2s ease;
-			}
-		}
 	}
 
 	&__nav {
-		transition: all $header-title-letter-time - 0.3s ease 0.2s;
-		transform: translate(0, -50%);
-		position: absolute;
-		top: 50%;
-		left: 20px;
-		z-index: 1;
-	}
-}
-
-@keyframes headerTitleLetter1 {
-
-	0% {
-		transform: translateY(0);
-	}
-
-	100% {
-		transform: translateY(-100vh);
+		height: 100%;
 	}
 }
