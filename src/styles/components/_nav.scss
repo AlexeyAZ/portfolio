@@ -3,40 +3,42 @@
     height: 100%;
 
     &__link {
-        transition: $trans;
+        //transition: $trans;
         background-color: white;
         box-shadow: 0 0 10px black;
         border-radius: 50%;
         display: block;
-        //opacity: 0;
         position: absolute;
-        top: calc((100% - #{$nav-link-size}) / 2);
-        left: calc((100% - #{$nav-link-size}) / 2);
+        top: 0;
+        left: 0;
         text-align: center;
         height: $nav-link-size;
         width: $nav-link-size;
         z-index: 1;
-
-        &_active {
-            opacity: 1;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            z-index: 2;
-        }
     }
 }
 
-.scale-enter-active, .scale-leave-active {
-    transition: $trans;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    z-index: 2;
+.scale-enter {
+    opacity: 0;
 }
-.scale-enter, .scale-leave-to {
-    height: 100%;
-    width: 100%;
+
+.scale-enter-to {
+    opacity: 1;
+}
+
+.scale-enter-active {
+    transition: all 1s 0.1s;
+}
+
+.scale-leave {
+    //opacity: 0;
+}
+
+.scale-leave-to {
+    transform: scale(1.5);
+    opacity: 0;
+}
+
+.scale-leave-active {
+    transition: 1s;
 }

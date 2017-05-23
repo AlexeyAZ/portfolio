@@ -21,7 +21,7 @@ Vue.component("site-nav", {
             } else {
                 return '';
             }
-        }
+        },
     },
 });
 
@@ -31,13 +31,13 @@ Vue.component("page-main", {
 });
 
 Vue.component("page-gallery", {
-    //props: ["list"],
+    props: ["list", "gallerycolumn"],
     template: '#page-gallery',
     data: function() {
 
         return {
             listAr: [],//this.list,
-            galleryColumn: 2,
+            galleryColumn: this.gallerycolumn,
             galleryScrollTop: 0,
             galleryHeight: null,
             galleryRowShow: 1,
@@ -45,6 +45,7 @@ Vue.component("page-gallery", {
 				height: null,
 				width: null
 			},
+			columns: [1,2,3],
             size: {
                 item: {
                     height: null,
@@ -76,6 +77,7 @@ Vue.component("page-gallery", {
     },
     
     mounted: function() {
+		console.log("gallery")
         var self = this;
 
         window.addEventListener("resize", function() {
@@ -106,7 +108,9 @@ Vue.component("page-gallery", {
                         "imgload": "false",
                         "visible": "false",
                         "top": "0",
-                        "imgid": data[i].id
+                        "imgid": data[i].id,
+                        "showframe": "false",
+                        "frameload": "false"
                     }
                     console.log(galleryItemObj);
 
@@ -127,12 +131,37 @@ Vue.component("page-gallery", {
     },
     methods: {
 
+        itemMouseover: function() {
+        },
+
+        loadFrame: function(item) {
+            item.showframe = !JSON.parse(item.showframe);
+
+            // if(item.showframe === false) {
+            //     item.frameload === "false";
+            // }
+            if (item.frameload === "true") {
+                item.frameload = "false";
+            }
+
+            // console.log(item.frameload)
+        },
+
+        frameLoaded: function(item) {
+            item.frameload = "true";
+        },
+
         setGallerySizes: function() {
 			this.size.item.height = document.documentElement.clientHeight / this.galleryColumn;
 			this.size.item.width = 100 / this.galleryColumn;
             this.size.list.height = this.$el.querySelector(".gallery__list").scrollHeight;
 			this.setGalleryItemHeightAttr();
         },
+
+		setColumn: function() {
+			this.setGallerySizes();
+			this.renderGallery();
+		},
 
         setGalleryItemHeightAttr: function() {
             var coef = 1;
@@ -207,6 +236,7 @@ var app = new Vue({
     data: {
         appLocation: "gallery",
         contentMove: true,
+		column: 2,
         links: [
             {
                 name: "Main",
@@ -221,6 +251,10 @@ var app = new Vue({
         ],
         sites: []
     },
+
+	created: function() {
+		console.log("created")
+	},
 
     methods: {
 

@@ -1,4 +1,4 @@
 div(:class="contentMove ? '' : 'content_move'").content
     transition(name="move" mode="out-in")
         page-main(v-if="appLocation == 'main'")
-        page-gallery(v-else)
+        page-gallery(v-else :gallerycolumn="column")

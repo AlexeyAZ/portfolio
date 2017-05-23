@@ -101,6 +101,11 @@ body {
     top: 0;
     right: 0;
     z-index: 10; }
+  .gallery__select {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10; }
   .gallery__list {
     display: -ms-flexbox;
     display: flex;
@@ -157,7 +162,8 @@ body {
     display: block;
     overflow: hidden;
     position: relative;
-    height: 100%; }
+    height: 100%;
+    z-index: 1; }
     .gallery__list-sitelink:before {
       transition: all 0.8s ease;
       background-color: white;
@@ -178,22 +184,32 @@ body {
     min-height: 100%;
     min-width: 100%;
     height: 100%; }
+  .gallery__list-btns {
+    padding: 0 20px;
+    pointer-events: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 60px;
+    width: 100%;
+    z-index: 3; }
   .gallery__list-link {
     transition: all 0.8s ease;
     -ms-transform: translateX(-10px);
         transform: translateX(-10px);
+    background-color: red;
     background-size: cover;
     background-repeat: no-repeat;
     border-radius: 50%;
+    display: inline-block;
+    pointer-events: auto;
     opacity: 0;
-    position: absolute;
-    left: 20px;
-    bottom: 20px;
     height: 40px;
     width: 40px;
     z-index: 2; }
     .gallery__list-link_git {
-      background-image: url("https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png"); }
+      background-image: url("https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png");
+      margin-right: 40px; }
       .gallery__list-link_git:before {
         transition: all 0.8s ease;
         -ms-transform: translateY(-90%) rotate(-20deg);
@@ -206,42 +222,85 @@ body {
         position: absolute;
         left: calc(100% + 5px);
         top: 50%; }
+  .gallery__list-frame-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 2; }
+  .gallery__list-frame-loader {
+    animation: gallery-frame-loader-animate infinite 2s linear;
+    border-top: 4px solid black;
+    border-right: 4px solid red;
+    border-bottom: 4px solid red;
+    border-left: 4px solid red;
+    border-radius: 50%;
+    position: absolute;
+    height: 40px;
+    width: 40px; }
+    .gallery__list-frame-loader:before {
+      content: "";
+      position: absolute; }
+  .gallery__list-frame {
+    height: 100%;
+    width: 100%; }
+    .gallery__list-frame:before {
+      content: "aaa"; }
+
+@keyframes gallery-frame-loader-animate {
+  0% {
+    transform: rotate(0); }
+  100% {
+    transform: rotate(360deg); } }
+
+.frame-leave-to {
+  opacity: 0; }
+
+.frame-leave-active {
+  transition: all 0.3s ease; }
+
+.frame-enter {
+  opacity: 0; }
+
+.frame-enter-to {
+  opacity: 1; }
+
+.frame-enter-active {
+  transition: all 0.3s ease; }
 
 .nav {
   position: relative;
   height: 100%; }
   .nav__link {
-    transition: all 0.3s ease;
     background-color: white;
     box-shadow: 0 0 10px black;
     border-radius: 50%;
     display: block;
     position: absolute;
-    top: calc((100% - 20%) / 2);
-    left: calc((100% - 20%) / 2);
+    top: 0;
+    left: 0;
     text-align: center;
-    height: 20%;
-    width: 20%;
+    height: 100%;
+    width: 100%;
     z-index: 1; }
-    .nav__link_active {
-      opacity: 1;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      z-index: 2; }
 
-.scale-enter-active, .scale-leave-active {
-  transition: all 0.3s ease;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  z-index: 2; }
+.scale-enter {
+  opacity: 0; }
 
-.scale-enter, .scale-leave-to {
-  height: 100%;
-  width: 100%; }
+.scale-enter-to {
+  opacity: 1; }
+
+.scale-enter-active {
+  transition: all 1s 0.1s; }
+
+.scale-leave-to {
+  -ms-transform: scale(1.5);
+      transform: scale(1.5);
+  opacity: 0; }
+
+.scale-leave-active {
+  transition: 1s; }
 
 .icon {
   display: inline-block;
