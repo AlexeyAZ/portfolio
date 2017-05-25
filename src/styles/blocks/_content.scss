@@ -17,6 +17,13 @@
 	&__container {
 		min-height: 100%;
 	}
+
+	&__gallery {
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+	}
 }
 
 .move-enter-active, .move-leave-active {

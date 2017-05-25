@@ -148,6 +148,8 @@ gulp.task('video', function () {
 gulp.task('font', function () {
     gulp.src(properties.folders.src + '/fonts/**/*.*')
         .pipe(gulp.dest(properties.folders.build + '/fonts'))
+    gulp.src('bower_components/components-font-awesome/fonts/**/*.*')
+        .pipe(gulp.dest(properties.folders.build + '/fonts/font-awesome/'))
 });
 
 gulp.task('json', function () {

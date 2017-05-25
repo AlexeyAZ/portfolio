@@ -19,7 +19,7 @@
       </header>
       <div class="content" :class="contentMove ? '' : 'content_move'">
         <transition name="move" mode="out-in">
-          <page-main v-if="appLocation == 'main'"></page-main>
+          <page-main v-if="appLocation === 'main'"></page-main>
           <page-gallery v-else :gallerycolumn="column"></page-gallery>
         </transition>
       </div>
@@ -44,20 +44,22 @@
             scroll-height: {{ size.list.height }}
         -->
         <div class="gallery__select">
-          <select v-model="galleryColumn" @change="setColumn">
+          <select v-model="galleryColumn" @change="setColumnSize">
             <option v-for="item in columns" :value="item">{{ item }}</option>
           </select>
         </div>
         <div class="gallery__list" @scroll="renderGallery">
           <div class="gallery__list-item" v-for="(item, index) in listAr" @mouseover="itemMouseover" :top="item.top" :style="{height: size.item.height + 'px',width: size.item.width + '%'}">
-            <div class="gallery__list-btns"><a class="gallery__list-link gallery__list-link_git" :href="item.gitlink"></a><a class="gallery__list-link" @click.prevent="loadFrame(item)" :href="item.gitlink"></a></div>
+            <div class="gallery__list-btns"><a class="gallery__list-link gallery__list-link_git" v-if="item.gitlink !== 'http://'" :href="item.gitlink"><i class="fa fa-github"></i></a><a class="gallery__list-link" @click.prevent="loadFrame(item)" :href="item.gitlink"><i class="fa fa-eye"></i></a></div>
             <transition name="frame"><a class="gallery__list-sitelink" @click.prevent="" v-if="!JSON.parse(item.showframe)" :href="item.href" :class="JSON.parse(item.visible) === true ? 'gallery__list-sitelink_load' : ''"><img class="gallery__list-img" :src="item.imgload" alt="" :data-src="item.imgsrc"></a>
               <div class="gallery__list-frame-wrap" v-else="JSON.parse(item.showframe)">
                 <div class="gallery__list-frame-loader" v-show="JSON.parse(item.frameload) === false ? true : false"></div>
-                <iframe class="gallery__list-frame" @load="frameLoaded(item)" :src="'http://' + item.href" frameborder="0"></iframe>
               </div>
             </transition>
           </div>
+        </div>
+        <div class="gallery__site">
+          <iframe class="gallery__list-frame"></iframe>
         </div>
       </div>
     </script>

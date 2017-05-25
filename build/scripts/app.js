@@ -37,15 +37,16 @@ Vue.component("page-gallery", {
 
         return {
             listAr: [], //this.list,
-            galleryColumn: this.gallerycolumn,
+            galleryColumn: null,
             galleryScrollTop: 0,
             galleryHeight: null,
-            galleryRowShow: 1,
+            galleryRows: 0,
+            galleryBuild: false,
             galleryItemSize: {
                 height: null,
                 width: null
             },
-            columns: [1, 2, 3],
+            columns: 4,
             size: {
                 item: {
                     height: null,
@@ -77,11 +78,19 @@ Vue.component("page-gallery", {
     },
 
     mounted: function () {
-        console.log("gallery");
         var self = this;
+        var resizeTimer;
 
         window.addEventListener("resize", function () {
-            self.setGallerySizes();
+
+            self.setColumnValueOnResize();
+
+            clearTimeout(resizeTimer);
+
+            resizeTimer = setTimeout(function () {
+                self.setGallerySizes();
+                self.renderGallery();
+            }, 250);
         });
 
         this.$http.get(this.imgur.api.album + this.imgur.albumhash + '/images', {
@@ -92,7 +101,6 @@ Vue.component("page-gallery", {
             var tempArray = [];
 
             for (var i = 0; i < data.length; i++) {
-                var dataTemplate = this.galleryItemTemplate;
                 var description = data[i].description;
                 var descriptionArr = description.replace(/\s/g, '').split(',');
 
@@ -108,13 +116,13 @@ Vue.component("page-gallery", {
                     "showframe": "false",
                     "frameload": "false"
                 };
-                console.log(galleryItemObj);
 
                 tempArray.push(galleryItemObj);
             }
 
             this.listAr = tempArray;
 
+            this.setColumnValueOnResize();
             this.setGallerySizes();
             this.renderGallery();
         }, function (error) {
@@ -129,14 +137,9 @@ Vue.component("page-gallery", {
         loadFrame: function (item) {
             item.showframe = !JSON.parse(item.showframe);
 
-            // if(item.showframe === false) {
-            //     item.frameload === "false";
-            // }
             if (item.frameload === "true") {
                 item.frameload = "false";
             }
-
-            // console.log(item.frameload)
         },
 
         frameLoaded: function (item) {
@@ -144,13 +147,38 @@ Vue.component("page-gallery", {
         },
 
         setGallerySizes: function () {
-            this.size.item.height = document.documentElement.clientHeight / this.galleryColumn;
+
+            this.size.item.height = (document.documentElement.clientWidth - 20) / this.galleryColumn / 1.5;
             this.size.item.width = 100 / this.galleryColumn;
             this.size.list.height = this.$el.querySelector(".gallery__list").scrollHeight;
             this.setGalleryItemHeightAttr();
+
+            var rowTop = 0;
+            for (let i = 0; i < this.listAr.length; i++) {
+
+                if (this.listAr[i].top !== rowTop) {
+                    rowTop = this.listAr[i].top;
+                    this.galleryRows++;
+                }
+            }
         },
 
-        setColumn: function () {
+        setColumnValueOnResize: function () {
+
+            if (window.matchMedia("(min-width:1024px)").matches) {
+                this.galleryColumn = 4;
+            }
+            if (window.matchMedia("(max-width:1024px)").matches) {
+                this.galleryColumn = 2;
+            }
+            if (window.matchMedia("(max-width:768px)").matches) {
+                this.galleryColumn = 1;
+            }
+
+            console.log(this.galleryColumn);
+        },
+
+        setColumnSize: function () {
             this.setGallerySizes();
             this.renderGallery();
         },
@@ -173,7 +201,6 @@ Vue.component("page-gallery", {
         renderGallery: function (e) {
 
             var self = this;
-            var rows = 0;
             var rowTop = 0;
             var coeff = 0;
 
@@ -183,17 +210,9 @@ Vue.component("page-gallery", {
                 this.galleryScrollTop = this.$el.querySelector(".gallery__list").scrollTop;
             }
 
-            for (let i = 0; i < this.listAr.length; i++) {
+            for (let i = 0; i < this.galleryRows; i++) {
 
-                if (this.listAr[i].top !== rowTop) {
-                    rowTop = this.listAr[i].top;
-                    rows++;
-                }
-            }
-
-            for (let i = 0; i < rows; i++) {
-
-                if (this.size.item.height * i - this.galleryScrollTop < document.documentElement.clientHeight) {
+                if (this.size.item.height * i - this.galleryScrollTop < document.documentElement.clientHeight && !this.galleryBuild) {
 
                     for (let j = 0; j < this.galleryColumn; j++) {
                         let number = j + coeff;
@@ -207,6 +226,10 @@ Vue.component("page-gallery", {
                             };
 
                             img.src = this.listAr[number].imgsrc;
+
+                            if (i + 1 === this.galleryRows) {
+                                this.galleryBuild = true;
+                            }
                         }
                     }
                     coeff += this.galleryColumn;
