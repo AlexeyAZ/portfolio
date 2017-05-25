@@ -18,20 +18,48 @@
         </div>
       </header>
       <div class="content" :class="contentMove ? '' : 'content_move'">
+        <!--transition(name="move" mode="out-in")
+        page-main(v-if="appLocation === 'main'")
+        page-gallery(v-else :gallerycolumn="column")
+        -->
         <transition name="move" mode="out-in">
-          <page-main v-if="appLocation === 'main'"></page-main>
-          <page-gallery v-else :gallerycolumn="column"></page-gallery>
+          <div class="content__gallery" v-show="appLocation === 'gallery'">
+            <page-gallery :gallerycolumn="column"></page-gallery>
+          </div>
+        </transition>
+        <transition name="move" mode="out-in">
+          <div v-show="appLocation === 'main'">
+            <page-main></page-main>
+          </div>
         </transition>
       </div>
       <footer class="footer"></footer>
     </div>
     <script id="site-nav" type="text/x-template">
       <nav class="nav">
-        <transition-group name="scale"><a class="nav__link" v-for="(item, index) in list" v-show="item.location === navlocation" :key="item" @click.prevent="setLocation(item, index)">{{ index }}</a></transition-group>
+        <transition-group name="scale"><a class="nav__link" v-for="(item, index) in list" v-show="item.location === navlocation" :key="item" @click.prevent="setLocation(item, index)"><i class="nav__link-icon" :class="item.class"></i>
+            <!--{{ index }}--></a></transition-group>
       </nav>
     </script>
     <script id="page-main" type="text/x-template">
-      <div>main</div>
+      <div class="main">
+        <div class="container">
+          <h2>Обо мне</h2>
+          <p>
+            Меня зовут Алексей<br>
+            Я занимаюсь версткой с 2014 года.<br>
+            В своих проектах использую следующие инструменты:
+          </p>
+          <ul class="main__skills">
+            <li class="main__skills-item" v-for="item in skillsList">
+              <p>{{ item }}</p>
+            </li>
+          </ul>
+          <p>Уровень моих навыков можно оценить на примере этого сайта и работ из портфолио.</p>
+          <p>mail: <a :href="aboutMe.mail"> {{ aboutMe.mail }}</a></p>
+          <p>skype: <a> {{ aboutMe.skype }}</a></p>
+        </div>
+      </div>
     </script>
     <script id="page-gallery" type="text/x-template">
       <div class="gallery">
@@ -50,8 +78,12 @@
         </div>
         <div class="gallery__list" @scroll="renderGallery">
           <div class="gallery__list-item" v-for="(item, index) in listAr" @mouseover="itemMouseover" :top="item.top" :style="{height: size.item.height + 'px',width: size.item.width + '%'}">
-            <div class="gallery__list-btns"><a class="gallery__list-link gallery__list-link_git" v-if="item.gitlink !== 'http://'" :href="item.gitlink"><i class="fa fa-github"></i></a><a class="gallery__list-link" @click.prevent="loadFrame(item)" :href="item.gitlink"><i class="fa fa-eye"></i></a></div>
-            <transition name="frame"><a class="gallery__list-sitelink" @click.prevent="" v-if="!JSON.parse(item.showframe)" :href="item.href" :class="JSON.parse(item.visible) === true ? 'gallery__list-sitelink_load' : ''"><img class="gallery__list-img" :src="item.imgload" alt="" :data-src="item.imgsrc"></a>
+            <div class="gallery__list-btns"><a class="gallery__list-link gallery__list-link_git" v-if="item.gitlink !== 'http://'" :href="item.gitlink" target="_blank"><i class="fa fa-github"></i></a>
+              <!--a(@click.prevent="loadFrame(item)" :href="item.gitlink").gallery__list-linki.fa.fa-eye
+              -->
+            </div>
+            <transition name="frame"><a class="gallery__list-sitelink" @click="" v-if="!JSON.parse(item.showframe)" :href="item.href" :class="JSON.parse(item.visible) === true ? 'gallery__list-sitelink_load' : ''" target="_blank"><span class="gallery__list-img-span" :style="'backgroundImage:url(' + item.imgload +')'"></span>
+                <!--img(:src="item.imgload", alt="").gallery__list-img--></a>
               <div class="gallery__list-frame-wrap" v-else="JSON.parse(item.showframe)">
                 <div class="gallery__list-frame-loader" v-show="JSON.parse(item.frameload) === false ? true : false"></div>
               </div>
