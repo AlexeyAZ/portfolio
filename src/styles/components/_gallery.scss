@@ -101,7 +101,7 @@
         z-index: 1;
 
         &:before {
-            transition: $content-trans;
+            transition: 1.5s;
             background-color: white;
             content: "";
             position: absolute;
@@ -118,6 +118,14 @@
                 background-color: transparent;
             }
         }
+    }
+
+    &__list-img-span {
+        background-position: center top;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: block;
+        height: 100%;
     }
 
     &__list-img {

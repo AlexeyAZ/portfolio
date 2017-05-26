@@ -1,3 +1,19 @@
 script#page-main(type="text/x-template")
-    div.
-        main
+    div.main
+        div.container
+            h2.
+                Обо мне
+            p.
+                Меня зовут Алексей<br>
+                Я занимаюсь версткой с 2014 года.<br>
+                В своих проектах использую следующие инструменты:
+            ul.main__skills
+                li(v-for="item in skillsList").main__skills-item
+                    p.
+                        {{ item }}
+            p.
+                Уровень моих навыков можно оценить на примере этого сайта и работ из портфолио.
+            p.
+                mail: <a :href="aboutMe.mail"> {{ aboutMe.mail }}</a>
+            p.
+                skype: <a> {{ aboutMe.skype }}</a>

@@ -1,0 +1,15 @@
+.main {
+	padding-top: 100px;
+	padding-bottom: 40px;
+	height: 100%;
+	overflow: auto;
+
+	@include media(w1024) {
+		padding-top: 60px;
+	}
+
+	@include media(w768) {
+		padding-top: 30px;
+		padding-bottom: 30px;
+	}
+}

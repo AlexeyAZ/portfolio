@@ -8,11 +8,14 @@ $header-full-width: 200px;
 $header-border-offset: 10px;
 $content-width: calc(100% - #{$header-width});
 
-$nav-link-size: 100%;
+$nav-link-size-pc: 100px;
+$nav-link-size-tablet: 80px;
+$nav-link-size-mobile: 50px;
 
 $container-padding-side-pc: 30px;
 
 $max-width: calc(1024px + 2*#{$container-padding-side-pc});
+$min-width: 320px;
 
 $gallery-list-link-size: 40px;
 $gallery-list-frame-loader-size: 40px;

@@ -1,5 +1,6 @@
 script#site-nav(type="text/x-template")
     nav.nav
         transition-group(name="scale")
-            a(v-for="(item, index) in list" v-show="item.location === navlocation" :key="item" @click.prevent="setLocation(item, index)").nav__link.
-                {{ index }}
+            a(v-for="(item, index) in list" v-show="item.location === navlocation" :key="item" @click.prevent="setLocation(item, index)").nav__link
+                i(:class="item.class").nav__link-icon
+                //{{ index }}

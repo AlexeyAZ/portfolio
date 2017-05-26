@@ -14,13 +14,14 @@ script#page-gallery(type="text/x-template")
         div(@scroll="renderGallery").gallery__list
             div(v-for="(item, index) in listAr", @mouseover="itemMouseover" :top="item.top", :style="{height: size.item.height + 'px',width: size.item.width + '%'}").gallery__list-item
                 div.gallery__list-btns
-                    a(v-if="item.gitlink !== 'http://'" :href="item.gitlink").gallery__list-link.gallery__list-link_git
+                    a(v-if="item.gitlink !== 'http://'" :href="item.gitlink" target="_blank").gallery__list-link.gallery__list-link_git
                         i.fa.fa-github
-                    a(@click.prevent="loadFrame(item)" :href="item.gitlink").gallery__list-link
+                    //a(@click.prevent="loadFrame(item)" :href="item.gitlink").gallery__list-link
                         i.fa.fa-eye
                 transition(name="frame")
-                    a(@click.prevent="" v-if="!JSON.parse(item.showframe)" :href="item.href", :class="JSON.parse(item.visible) === true ? 'gallery__list-sitelink_load' : ''").gallery__list-sitelink
-                        img(:src="item.imgload", alt="", :data-src="item.imgsrc").gallery__list-img
+                    a(@click="" v-if="!JSON.parse(item.showframe)" :href="item.href", :class="JSON.parse(item.visible) === true ? 'gallery__list-sitelink_load' : ''" target="_blank").gallery__list-sitelink
+                        span(:style="'backgroundImage:url(' + item.imgload +')'").gallery__list-img-span
+                        //img(:src="item.imgload", alt="").gallery__list-img
                     div(v-else="JSON.parse(item.showframe)").gallery__list-frame-wrap
                         div(v-show="JSON.parse(item.frameload) === false ? true : false").gallery__list-frame-loader
                         iframe(@load="frameLoaded(item)" :src="item.href", frameborder="0").gallery__list-frame

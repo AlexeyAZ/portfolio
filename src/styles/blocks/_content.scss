@@ -1,10 +1,14 @@
 .content {
 	transition: $content-trans;
-	//position: absolute;
 	top: 0;
 	left: 0;
 	height: 100%;
 	width: 100%;
+	min-width: $min-width;
+
+	& > div {
+		height: 100%;
+	}
 	
 	&_move {
 		transform: translateX(calc(#{$header-full-width} - #{$header-width}));
@@ -27,8 +31,20 @@
 }
 
 .move-enter-active, .move-leave-active {
-	transition: opacity .5s
+	transition: opacity 1s;
 }
-.move-enter, .move-leave-to {
-	opacity: 0
+.move-enter {
+	opacity: 0;
+}
+
+.move-enter-to {
+	opacity: 1;
+}
+
+.move-leave {
+	//opacity: 1;
+}
+
+.move-leave-to {
+	opacity: 0;
 }

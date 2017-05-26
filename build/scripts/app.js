@@ -27,7 +27,17 @@ Vue.component("site-nav", {
 
 Vue.component("page-main", {
     props: ["list"],
-    template: '#page-main'
+    template: '#page-main',
+    data: function () {
+
+        return {
+            skillsList: ["HTML", "CSS", "JavaScript", "jQuery", "Pug", "Ajax", "Twitter Bootstrap", "less", "sass", "stylus", "SVG", "Gulp", "БЭМ", "Git"],
+            aboutMe: {
+                mail: "teos.nl@gmail.com",
+                skype: "alexey-wm"
+            }
+        };
+    }
 });
 
 Vue.component("page-gallery", {
@@ -254,11 +264,13 @@ var app = new Vue({
         links: [{
             name: "Main",
             href: "http://",
-            location: "main"
+            location: "main",
+            class: "fa fa-th"
         }, {
             name: "Gallery",
             href: "http://",
-            location: "gallery"
+            location: "gallery",
+            class: "fa fa-user-circle"
         }],
         sites: []
     },
