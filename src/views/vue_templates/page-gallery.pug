@@ -23,5 +23,5 @@ script#page-gallery(type="text/x-template")
                         img(:src="item.imgload", alt="", :data-src="item.imgsrc").gallery__list-img
                     div(v-else="JSON.parse(item.showframe)").gallery__list-frame-wrap
                         div(v-show="JSON.parse(item.frameload) === false ? true : false").gallery__list-frame-loader
-        div.gallery__site
-            iframe().gallery__list-frame
+                        iframe(@load="frameLoaded(item)" :src="item.href", frameborder="0").gallery__list-frame
+        //div.gallery__site
