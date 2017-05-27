@@ -26,15 +26,34 @@ Vue.component("site-nav", {
 });
 
 Vue.component("page-main", {
-    props: ["list"],
+    props: ["list", "sitelocation"],
     template: '#page-main',
     data: function() {
 
         return {
+
             skillsList: ["HTML", "CSS", "JavaScript", "jQuery", "Pug", "Ajax", "Twitter Bootstrap", "less", "sass", "stylus", "SVG", "Gulp", "БЭМ", "Git"],
+            
             aboutMe: {
                 mail: "teos.nl@gmail.com",
                 skype: "alexey-wm"
+            }
+        }
+    },
+
+    mounted: function() {
+        console.log(this.sitelocation);
+    },
+
+    methods: {
+        
+        isMain: function() {
+            
+            if (this.sitelocation === 'main') {
+                console.log(this.sitelocation);
+                return true;
+            } else {
+                return false;
             }
         }
     }
@@ -47,6 +66,10 @@ Vue.component("page-gallery", {
 
         return {
             listAr: [],//this.list,
+            galleryFrame: {
+                show: false,
+                src: "http://"
+            },
             galleryColumn: null,
             galleryScrollTop: 0,
             galleryHeight: null,
@@ -71,19 +94,8 @@ Vue.component("page-gallery", {
                 api: {
                     album: 'https://api.imgur.com/3/album/'
                 },
-                albumhash: '7weNZ'
+                albumhash: 'khlzi'
             },
-            galleryArray: [],
-            galleryItemTemplate: {
-                "name": "site1",
-                "href": "http://",
-                "imgsrc": "http://web-dev.pw/images/i_shop.jpg",
-                "gitlink": "http://",
-                "imgload": "false",
-                "visible": "false",
-                "top": "0",
-                "imgid": "aT2HpJA"
-            }
         }
     },
     
@@ -103,6 +115,7 @@ Vue.component("page-gallery", {
             }, 250);
         });
 
+
         this.$http.get(
             this.imgur.api.album + this.imgur.albumhash + '/images',
             {
@@ -110,7 +123,6 @@ Vue.component("page-gallery", {
             }
         ).then(
             function(response) {
-
                 var data = response.body.data;
                 var tempArray = [];
 
@@ -152,12 +164,14 @@ Vue.component("page-gallery", {
         itemMouseover: function() {
         },
 
-        loadFrame: function(item) {
-            item.showframe = !JSON.parse(item.showframe);
+        openFrame: function(item) {
+            this.galleryFrame.show = true;
+            this.galleryFrame.src = item.href;
+        },
 
-            if (item.frameload === "true") {
-                item.frameload = "false";
-            }
+        closeFrame: function() {
+            this.galleryFrame.show = false;
+            this.galleryFrame.src = "http://";
         },
 
         frameLoaded: function(item) {
@@ -192,8 +206,6 @@ Vue.component("page-gallery", {
             if (window.matchMedia("(max-width:768px)").matches) {
                 this.galleryColumn = 1;
             }
-
-            console.log(this.galleryColumn)
         },
 
 		setColumnSize: function() {
@@ -216,6 +228,26 @@ Vue.component("page-gallery", {
             };
         },
 
+        scrollGalleryList: function() {
+            var self = this;
+            var scrollTimer;
+
+            clearTimeout(scrollTimer);
+
+            scrollTimer = setTimeout(function() {
+                self.renderGallery();
+            }, 250);
+        },
+
+        galleryImgLoaded: function(item) {
+
+            if (item.imgload === 'false') {
+                return false;
+            } else {
+                return true;
+            }
+        },
+
         renderGallery: function(e) {
             
             var self = this;
@@ -228,29 +260,32 @@ Vue.component("page-gallery", {
                 this.galleryScrollTop = this.$el.querySelector(".gallery__list").scrollTop;
             }
 
-            for(let i = 0; i < this.galleryRows; i++) {
+            if (!this.galleryBuild) {
                 
-                if (((this.size.item.height * i - this.galleryScrollTop) < document.documentElement.clientHeight) && !this.galleryBuild) {
-                    
-                    for (let j = 0; j < this.galleryColumn; j++) {
-                        let number = j + coeff;
+                for(let i = 0; i < this.galleryRows; i++) {
+                
+                    if (((this.size.item.height * i - this.galleryScrollTop) < document.documentElement.clientHeight)) {
+                        
+                        for (let j = 0; j < this.galleryColumn; j++) {
+                            let number = j + coeff;
 
-                        if (typeof this.listAr[number] !== "undefined" && this.listAr[number].visible === "false") {
+                            if (typeof this.listAr[number] !== "undefined" && this.listAr[number].visible === "false") {
 
-                            var img = new Image();
-                            img.onload = function() {
-                                self.listAr[number].imgload = self.listAr[number].imgsrc;
-                                self.listAr[number].visible = "true";
-                            }
+                                var img = new Image();
+                                img.onload = function() {
+                                    self.listAr[number].imgload = self.listAr[number].imgsrc;
+                                    self.listAr[number].visible = "true";
+                                }
 
-                            img.src = this.listAr[number].imgsrc;
+                                img.src = this.listAr[number].imgsrc;
 
-                            if (i + 1 === this.galleryRows) {
-                                this.galleryBuild = true;
+                                if (i + 1 === this.galleryRows) {
+                                    this.galleryBuild = true;
+                                }
                             }
                         }
+                        coeff += this.galleryColumn;
                     }
-                    coeff += this.galleryColumn;
                 }
             }
         },

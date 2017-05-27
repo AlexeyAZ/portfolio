@@ -2342,6 +2342,12 @@
 .bold {
   font-size: bold; }
 
+.mb1 {
+  margin-bottom: 1em; }
+
+.mb2 {
+  margin-bottom: 2em; }
+
 h1, h2, h3, h4, h5, h6, p {
   margin-bottom: 0.5em; }
 
@@ -2440,6 +2446,10 @@ body {
     .main {
       padding-top: 30px;
       padding-bottom: 30px; } }
+  .main__skills {
+    border-bottom: 1px solid black;
+    margin-bottom: 1em;
+    padding-bottom: 1em; }
 
 .gallery {
   transition: all 0.8s ease;
@@ -2520,15 +2530,12 @@ body {
     .gallery__list-sitelink:before {
       transition: 1.5s;
       background-color: white;
-      content: "";
       position: absolute;
       top: 0;
       left: 0;
       height: 100%;
       width: 100%;
       z-index: 1; }
-    .gallery__list-sitelink_load:before {
-      background-color: transparent; }
   .gallery__list-img-span {
     background-position: center top;
     background-repeat: no-repeat;
@@ -2573,6 +2580,9 @@ body {
     z-index: 2; }
     .gallery__list-link_git {
       font-size: 2em; }
+    @media only screen and (max-width: 768px) {
+      .gallery__list-link_frame {
+        display: none; } }
     .gallery__list-link i {
       -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
@@ -2609,6 +2619,22 @@ body {
     width: 100%; }
     .gallery__list-frame:before {
       content: "aaa"; }
+  .gallery__frame-wrap {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    z-index: 7; }
+  .gallery__frame {
+    background-color: white;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    height: 90%;
+    width: 90%; }
 
 @keyframes gallery-frame-loader-animate {
   0% {
@@ -2616,20 +2642,14 @@ body {
   100% {
     transform: rotate(360deg); } }
 
-.frame-leave-to {
+.gallery-img-fade-enter {
   opacity: 0; }
 
-.frame-leave-active {
-  transition: all 0.3s ease; }
-
-.frame-enter {
-  opacity: 0; }
-
-.frame-enter-to {
+.gallery-img-fade-enter-to {
   opacity: 1; }
 
-.frame-enter-active {
-  transition: all 0.3s ease; }
+.gallery-img-fade-enter-active {
+  transition: 0.5s; }
 
 .nav {
   position: relative; }

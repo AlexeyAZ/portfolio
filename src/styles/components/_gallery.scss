@@ -103,20 +103,13 @@
         &:before {
             transition: 1.5s;
             background-color: white;
-            content: "";
+            //content: "";
             position: absolute;
             top: 0;
             left: 0;
             height: 100%;
             width: 100%;
             z-index: 1;
-        }
-
-        &_load {
-            
-            &:before {
-                background-color: transparent;
-            }
         }
     }
 
@@ -177,7 +170,13 @@
 
         &_git {
             font-size: 2em;
-            //background-image: url("https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png");
+        }
+
+        &_frame {
+
+            @include media(w768) {
+                display: none;
+            }
         }
 
         i {
@@ -227,6 +226,26 @@
             content: "aaa";
         }
     }
+
+    &__frame-wrap {
+        background-color: rgba(0,0,0,0.5);
+        position: absolute;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        height: 100%;
+        width: 100%;
+        z-index: 7;
+    }
+
+    &__frame {
+        background-color: white;
+        position: absolute;
+        top: 5%;
+        left: 5%;
+        height: 90%;
+        width: 90%;
+    }
 }
 
 @keyframes gallery-frame-loader-animate {
@@ -240,22 +259,14 @@
     }
 }
 
-.frame-leave-to {
+.gallery-img-fade-enter {
     opacity: 0;
 }
 
-.frame-leave-active {
-    transition: $trans;
-}
-
-.frame-enter {
-    opacity: 0;
-}
-
-.frame-enter-to {
+.gallery-img-fade-enter-to {
     opacity: 1;
 }
 
-.frame-enter-active {
-    transition: $trans;
+.gallery-img-fade-enter-active {
+    transition: 0.5s;
 }

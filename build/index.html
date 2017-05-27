@@ -29,7 +29,7 @@
         </transition>
         <transition name="move" mode="out-in">
           <div v-show="appLocation === 'main'">
-            <page-main></page-main>
+            <page-main :sitelocation="appLocation"></page-main>
           </div>
         </transition>
       </div>
@@ -45,7 +45,7 @@
       <div class="main">
         <div class="container">
           <h2>Обо мне</h2>
-          <p>
+          <p class="mb1">
             Меня зовут Алексей<br>
             Я занимаюсь версткой с 2014 года.<br>
             В своих проектах использую следующие инструменты:
@@ -55,7 +55,7 @@
               <p>{{ item }}</p>
             </li>
           </ul>
-          <p>Уровень моих навыков можно оценить на примере этого сайта и работ из портфолио.</p>
+          <p>Контакты:</p>
           <p>mail: <a :href="aboutMe.mail"> {{ aboutMe.mail }}</a></p>
           <p>skype: <a> {{ aboutMe.skype }}</a></p>
         </div>
@@ -76,22 +76,23 @@
             <option v-for="item in columns" :value="item">{{ item }}</option>
           </select>
         </div>
-        <div class="gallery__list" @scroll="renderGallery">
+        <div class="gallery__list" @scroll="scrollGalleryList">
           <div class="gallery__list-item" v-for="(item, index) in listAr" @mouseover="itemMouseover" :top="item.top" :style="{height: size.item.height + 'px',width: size.item.width + '%'}">
-            <div class="gallery__list-btns"><a class="gallery__list-link gallery__list-link_git" v-if="item.gitlink !== 'http://'" :href="item.gitlink" target="_blank"><i class="fa fa-github"></i></a>
-              <!--a(@click.prevent="loadFrame(item)" :href="item.gitlink").gallery__list-linki.fa.fa-eye
-              -->
-            </div>
-            <transition name="frame"><a class="gallery__list-sitelink" @click="" v-if="!JSON.parse(item.showframe)" :href="item.href" :class="JSON.parse(item.visible) === true ? 'gallery__list-sitelink_load' : ''" target="_blank"><span class="gallery__list-img-span" :style="'backgroundImage:url(' + item.imgload +')'"></span>
+            <div class="gallery__list-btns"><a class="gallery__list-link gallery__list-link_git" v-if="item.gitlink !== 'http://'" :href="item.gitlink" target="_blank"><i class="fa fa-github"></i></a><a class="gallery__list-link gallery__list-link_frame" @click.prevent="openFrame(item)"><i class="fa fa-eye"></i></a></div>
+            <transition name="gallery-img-fade"><a class="gallery__list-sitelink" @click="" v-show="galleryImgLoaded(item)" :href="item.href" target="_blank"><span class="gallery__list-img-span" :style="'backgroundImage:url(' + item.imgload +')'"></span>
                 <!--img(:src="item.imgload", alt="").gallery__list-img--></a>
-              <div class="gallery__list-frame-wrap" v-else="JSON.parse(item.showframe)">
-                <div class="gallery__list-frame-loader" v-show="JSON.parse(item.frameload) === false ? true : false"></div>
-                <iframe class="gallery__list-frame" @load="frameLoaded(item)" :src="item.href" frameborder="0"></iframe>
-              </div>
+              <!--div(v-else="JSON.parse(item.showframe)").gallery__list-frame-wrap
+              div(v-show="JSON.parse(item.frameload) === false ? true : false").gallery__list-frame-loader
+              iframe(@load="frameLoaded(item)" :src="item.href", frameborder="0").gallery__list-frame
+              -->
             </transition>
           </div>
         </div>
-        <!--div.gallery__site-->
+        <transition name="frame-fade">
+          <div class="gallery__frame-wrap" @click="closeFrame" v-show="galleryFrame.show">
+            <iframe class="gallery__frame" :src="galleryFrame.src" frameborder="0"></iframe>
+          </div>
+        </transition>
       </div>
     </script>
     <script src="scripts/vendor.js"></script>
