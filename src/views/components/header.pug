@@ -1,3 +1,3 @@
 header.header
-	div.header__nav
-		site-nav(:list="links" @link_click="renderLocation", :navlocation="appLocation")
+	div(v-show="showNav").header__nav
+		site-nav(:navstatus="showNav" :list="links" @link_click="renderLocation", :navlocation="appLocation")
