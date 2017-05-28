@@ -71,11 +71,11 @@
         div.gallery__system-info.
             scroll-height: {{ size.list.height }}
         -->
-        <div class="gallery__select">
-          <select v-model="galleryColumn" @change="setColumnSize">
-            <option v-for="item in columns" :value="item">{{ item }}</option>
-          </select>
-        </div>
+        <!--div.gallery__select
+        select(v-model="galleryColumn" @change="setColumnSize")
+            option(v-for="item in columns" :value="item").
+                {{ item }}
+        -->
         <div class="gallery__list" @scroll="scrollGalleryList">
           <div class="gallery__list-item" v-for="(item, index) in listAr" @mouseover="itemMouseover" :top="item.top" :style="{height: size.item.height + 'px',width: size.item.width + '%'}">
             <div class="gallery__list-btns"><a class="gallery__list-link gallery__list-link_git" v-if="item.gitlink !== 'http://'" :href="item.gitlink" target="_blank"><i class="fa fa-github"></i></a><a class="gallery__list-link gallery__list-link_frame" @click.prevent="openFrame(item)"><i class="fa fa-eye"></i></a></div>

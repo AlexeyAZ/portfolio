@@ -7,7 +7,7 @@ script#page-gallery(type="text/x-template")
                 display-height: {{ document.documentElement.clientHeight }}
             div.gallery__system-info.
                 scroll-height: {{ size.list.height }}
-        div.gallery__select
+        //div.gallery__select
             select(v-model="galleryColumn" @change="setColumnSize")
                 option(v-for="item in columns" :value="item").
                     {{ item }}
