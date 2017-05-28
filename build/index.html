@@ -13,8 +13,8 @@
     <div class="wrapper" id="app">
       <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none;"></svg>
       <header class="header">
-        <div class="header__nav">
-          <site-nav :list="links" @link_click="renderLocation" :navlocation="appLocation"></site-nav>
+        <div class="header__nav" v-show="showNav">
+          <site-nav :navstatus="showNav" :list="links" @link_click="renderLocation" :navlocation="appLocation"></site-nav>
         </div>
       </header>
       <div class="content" :class="contentMove ? '' : 'content_move'">
@@ -24,7 +24,7 @@
         -->
         <transition name="move" mode="out-in">
           <div class="content__gallery" v-show="appLocation === 'gallery'">
-            <page-gallery :gallerycolumn="column"></page-gallery>
+            <page-gallery :gallerycolumn="column" @show_nav="isNav"></page-gallery>
           </div>
         </transition>
         <transition name="move" mode="out-in">
@@ -37,8 +37,7 @@
     </div>
     <script id="site-nav" type="text/x-template">
       <nav class="nav">
-        <transition-group name="scale"><a class="nav__link" v-for="(item, index) in list" v-show="item.location === navlocation" :key="item" @click.prevent="setLocation(item, index)"><i class="nav__link-icon" :class="item.class"></i>
-            <!--{{ index }}--></a></transition-group>
+        <transition-group name="scale"><a class="nav__link" v-for="(item, index) in list" v-show="item.location === navlocation" :key="item" @click.prevent="setLocation(item, index)"><i class="nav__link-icon" :class="item.class"></i></a></transition-group>
       </nav>
     </script>
     <script id="page-main" type="text/x-template">

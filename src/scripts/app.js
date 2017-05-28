@@ -1,7 +1,13 @@
 
 Vue.component("site-nav", {
-    props: ["list", "navlocation"],
+    props: ["list", "navlocation", "navstatus"],
     template: '#site-nav',
+    data: function() {
+        
+        return {
+            navStatus: this.navstatus,
+        }
+    },
     methods: {
 
         setLocation: function(item, index) {
@@ -33,7 +39,7 @@ Vue.component("page-main", {
         return {
 
             skillsList: ["HTML", "CSS", "JavaScript", "jQuery", "Pug", "Ajax", "Twitter Bootstrap", "less", "sass", "stylus", "SVG", "Gulp", "БЭМ", "Git"],
-            
+
             aboutMe: {
                 mail: "teos.nl@gmail.com",
                 skype: "alexey-wm"
@@ -65,7 +71,7 @@ Vue.component("page-gallery", {
     data: function() {
 
         return {
-            listAr: [],//this.list,
+            listAr: [],
             galleryFrame: {
                 show: false,
                 src: "http://"
@@ -167,11 +173,13 @@ Vue.component("page-gallery", {
         openFrame: function(item) {
             this.galleryFrame.show = true;
             this.galleryFrame.src = item.href;
+            this.$emit('show_nav', false);
         },
 
         closeFrame: function() {
             this.galleryFrame.show = false;
-            this.galleryFrame.src = "http://";
+            this.$emit('show_nav', true);
+            //this.galleryFrame.src = "http://";
         },
 
         frameLoaded: function(item) {
@@ -304,6 +312,7 @@ var app = new Vue({
         appLocation: "gallery",
         contentMove: true,
 		column: 2,
+        showNav: true,
         links: [
             {
                 name: "Main",
@@ -326,6 +335,12 @@ var app = new Vue({
 	},
 
     methods: {
+
+        isNav: function(status) {
+            console.log(status);
+            this.showNav = status;
+            console.log(this.showNav);
+        },
 
         createArray: function(arr) {
             this.sites = arr;

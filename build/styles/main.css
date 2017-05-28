@@ -2651,6 +2651,15 @@ body {
 .gallery-img-fade-enter-active {
   transition: 0.5s; }
 
+.frame-fade-enter, .frame-fade-leave-to {
+  opacity: 0; }
+
+.frame-fade-enter-to, .frame-fade-leave {
+  opacity: 1; }
+
+.frame-fade-enter-active, .frame-fade-leave-active {
+  transition: 0.5s; }
+
 .nav {
   position: relative; }
   .nav__link {

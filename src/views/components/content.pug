@@ -4,7 +4,7 @@ div(:class="contentMove ? '' : 'content_move'").content
         page-gallery(v-else :gallerycolumn="column")
     transition(name="move" mode="out-in")
         div(v-show="appLocation === 'gallery'").content__gallery
-            page-gallery(:gallerycolumn="column")
+            page-gallery(:gallerycolumn="column" @show_nav="isNav")
     transition(name="move" mode="out-in")
         div(v-show="appLocation === 'main'")
             page-main(:sitelocation="appLocation")
