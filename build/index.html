@@ -76,9 +76,9 @@
                 {{ item }}
         -->
         <div class="gallery__list" @scroll="scrollGalleryList">
-          <div class="gallery__list-item" v-for="(item, index) in listAr" @mouseover="itemMouseover" :top="item.top" :style="{height: size.item.height + 'px',width: size.item.width + '%'}">
-            <div class="gallery__list-btns"><a class="gallery__list-link gallery__list-link_git" v-if="item.gitlink !== 'http://'" :href="item.gitlink" target="_blank"><i class="fa fa-github"></i></a><a class="gallery__list-link gallery__list-link_frame" @click.prevent="openFrame(item)"><i class="fa fa-eye"></i></a></div>
-            <transition name="gallery-img-fade"><a class="gallery__list-sitelink" @click="" v-show="galleryImgLoaded(item)" :href="item.href" target="_blank"><span class="gallery__list-img-span" :style="'backgroundImage:url(' + item.imgload +')'"></span>
+          <div class="gallery__list-item" v-for="(item, index) in listAr" :top="item.top" :style="{height: size.item.height + 'px',width: size.item.width + '%'}">
+            <div class="gallery__list-links"><a class="gallery__list-link gallery__list-link_git" v-if="item.gitlink !== 'http://'" :href="item.gitlink" target="_blank"><i class="fa fa-github"></i></a><a class="gallery__list-link gallery__list-link_frame" @click.prevent="openFrame(item)"><i class="fa fa-eye"></i></a></div>
+            <transition name="gallery-img-fade"><a class="gallery__list-sitelink" @click="" v-show="galleryImgLoaded(item)" :href="item.href" target="_blank"><span class="gallery__list-img" :style="'backgroundImage:url(' + item.imgload +')'"></span>
                 <!--img(:src="item.imgload", alt="").gallery__list-img--></a>
               <!--div(v-else="JSON.parse(item.showframe)").gallery__list-frame-wrap
               div(v-show="JSON.parse(item.frameload) === false ? true : false").gallery__list-frame-loader
@@ -89,7 +89,11 @@
         </div>
         <transition name="frame-fade">
           <div class="gallery__frame-wrap" @click="closeFrame" v-show="galleryFrame.show">
-            <iframe class="gallery__frame" :src="galleryFrame.src" frameborder="0"></iframe>
+            <div class="gallery__frame-container">
+              <div class="gallery__frame-close" @click="closeFrame" :class="galleryFrame.load === true ? 'gallery__frame-close_animate' : ''"></div>
+              <div class="gallery__frame-loader" :class="galleryFrame.load === true ? 'gallery__frame-loader_hide' : ''"></div>
+              <iframe class="gallery__frame" @load="frameLoad" :src="galleryFrame.src" frameborder="0"></iframe>
+            </div>
           </div>
         </transition>
       </div>

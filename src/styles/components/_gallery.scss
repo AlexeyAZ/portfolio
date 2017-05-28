@@ -5,6 +5,8 @@
     overflow: hidden;
     height: 100%;
 
+    // debugging options
+
     &__system {
         background-color: rgba(0,0,0,0.6);
         color: white;
@@ -21,6 +23,8 @@
         z-index: 10;
     }
 
+    // /debugging options
+
     &__list {
         display: flex;
         align-content: flex-start;
@@ -30,43 +34,27 @@
     }
 
     &__list-item {
-        //transform: translate3d(0,0,0);
         transition: $content-trans;
         display: block;
         position: relative;
         height: 300px;
 
-        &:before,
         &:after {
-            transition: $content-trans;
             content: "";
-            opacity: 1;
+            transition: $content-trans;background-image: linear-gradient(to top, rgba(0,0,0,0.4) 5%, rgba(0,0,0,0.3) 15%, rgba(0,0,0,0.2) 20%, rgba(0,0,0,0.0) 25%, rgba(0,0,0,0.0) 100%);
+            opacity: 0;
             pointer-events: none;
             position: absolute;
             top: 0;
             left: 0;
             height: 100%;
             width: 100%;
-        }
-
-        &:before {
-            //background-color: rgba(0,0,0,0.4);
-            z-index: 2;
-        }
-
-        &:after {
-            background-image: linear-gradient(to top, rgba(0,0,0,0.4) 5%, rgba(0,0,0,0.3) 15%, rgba(0,0,0,0.2) 20%, rgba(0,0,0,0.0) 25%, rgba(0,0,0,0.0) 100%);
-            opacity: 0;
             z-index: 1;
         }
 
         &:hover {
             box-shadow: 0 0 5px black;
             z-index: 2;
-
-            &:before {
-                opacity: 0;
-            }
 
             &:after {
                 transform: translateY(0);
@@ -81,13 +69,6 @@
                     transform: translateX(0) scale(1.1);
                 }
             }
-
-            .gallery__list-link_git {
-
-                &:before {
-                    transform: translateY(-50%) rotate(0);
-                }
-            }
         }
     }
 
@@ -99,21 +80,9 @@
         position: relative;
         height: 100%;
         z-index: 1;
-
-        &:before {
-            transition: 1.5s;
-            background-color: white;
-            //content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            z-index: 1;
-        }
     }
 
-    &__list-img-span {
+    &__list-img {
         background-position: center top;
         background-repeat: no-repeat;
         background-size: cover;
@@ -121,24 +90,7 @@
         height: 100%;
     }
 
-    &__list-img {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        //opacity: 0;
-        //visibility: hidden;
-        min-height: 100%;
-        min-width: 100%;
-        height: 100%;
-        //width: 100%;
-    }
-
-    //
-    &__btn {}
-    //
-
-    &__list-btns {
+    &__list-links {
         padding: 0 20px;
         pointer-events: none;
         position: absolute;
@@ -158,6 +110,7 @@
         box-shadow: 0 0 5px rgba(0,0,0,0.5);
         border-radius: 50%;
         display: inline-block;
+        cursor: pointer;
         color: black;
         font-size: 1.4em;
         pointer-events: auto;
@@ -185,50 +138,15 @@
             top: 50%;
             left: 50%;
         }
-    }
 
-    &__list-frame-wrap {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        z-index: 2;
-    }
-
-    &__list-frame-loader {
-        background-color: white;
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-
-        &:before {
-            content: "";
-            animation: gallery-frame-loader-animate infinite 2s linear;
-            border-top: 4px solid black;
-            border-right: 4px solid red;
-            border-bottom: 4px solid red;
-            border-left: 4px solid red;
-            border-radius: 50%;
-            position: absolute;
-            height: $gallery-list-frame-loader-size;
-            width: $gallery-list-frame-loader-size;
-        }
-    }
-
-    &__list-frame {
-        height: 100%;
-        width: 100%;
-
-        &:before {
-            content: "aaa";
+        @include media(w1024) {
+            transform: translateX(0);
+            opacity: 1;
         }
     }
 
     &__frame-wrap {
-        background-color: rgba(0,0,0,0.5);
+        background-color: rgba(0,0,0,0.7);
         position: absolute;
         top: 0;
         left: 0;
@@ -238,13 +156,104 @@
         z-index: 7;
     }
 
-    &__frame {
+    &__frame-container {
         background-color: white;
+        box-shadow: 0 0 8px rgba(255,255,255,0.8), 0 0 6px rgba(255,255,255,0.9), 0 0 4px rgba(255,255,255,1);
         position: absolute;
         top: 5%;
         left: 5%;
         height: 90%;
         width: 90%;
+    }
+
+    &__frame-close {
+        transition: $trans;
+        background-color: white;
+        box-shadow: 0 0 3px rgba(0,0,0,0.5), 0 0 3px rgba(255,255,255,0.5);
+        border-radius: 50%;
+        cursor: pointer;
+        position: absolute;
+        top: calc(-#{$gallery-frame-close-size} / 4);
+        right: calc(-#{$gallery-frame-close-size} / 4);
+        height: $gallery-frame-close-size;
+        width: $gallery-frame-close-size;
+        z-index: 3;
+
+        &:before,
+        &:after {
+            transition: $trans;
+            content: "";
+            background-color: black;
+            margin-left: -1px;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            height: $gallery-frame-close-size - 20px;
+            width: 2px;
+        }
+
+        &:before {
+            transform: rotate(45deg);
+        }
+
+        &:after {
+            transform: rotate(-45deg);
+        }
+
+        &:hover {
+            background-color: black;
+
+            &:before,
+            &:after {
+                background-color: white;
+            }
+        }
+
+        &_animate {
+            animation: gallery-frame-close-animate 0.7s linear;
+        }
+    }
+
+    &__frame-loader {
+        transition: $trans;
+        background-color: white;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 2;
+
+        &:before {
+            animation: gallery-frame-loader-animate 2s infinite linear;
+            content: "";
+            border: 4px solid black;
+            border-bottom: 4px solid rgba(0,0,0,0.2);
+            border-radius: 50%;
+            margin-top: calc(-#{$gallery-frame-container-loader-size} / 2);
+            margin-left: calc(-#{$gallery-frame-container-loader-size} / 2);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            height: $gallery-frame-container-loader-size;
+            width: $gallery-frame-container-loader-size;
+        } 
+        
+        &_hide {
+            opacity: 0;
+            visibility: hidden;
+
+            &:before {
+                content: none;
+            }
+        }
+    }
+
+    &__frame {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        z-index: 1;
     }
 }
 
@@ -256,6 +265,18 @@
 
     100% {
         transform: rotate(360deg);
+    }
+}
+
+@keyframes gallery-frame-close-animate {
+
+    50% {
+        background-color: black;
+
+        &:before,
+        &:after {
+            background-color: white;
+        }
     }
 }
 
@@ -282,6 +303,10 @@
     opacity: 1;
 }
 
-.frame-fade-enter-active, .frame-fade-leave-active {
+.frame-fade-enter-active {
     transition: 0.5s;
+}
+
+.frame-fade-leave-active {
+    transition: 0;
 }

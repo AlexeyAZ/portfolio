@@ -73,6 +73,7 @@ Vue.component("page-gallery", {
         return {
             listAr: [],
             galleryFrame: {
+                load: false,
                 show: false,
                 src: "http://"
             },
@@ -159,8 +160,6 @@ Vue.component("page-gallery", {
     },
     methods: {
 
-        itemMouseover: function () {},
-
         openFrame: function (item) {
             this.galleryFrame.show = true;
             this.galleryFrame.src = item.href;
@@ -169,12 +168,20 @@ Vue.component("page-gallery", {
 
         closeFrame: function () {
             this.galleryFrame.show = false;
+            this.galleryFrame.load = false;
             this.$emit('show_nav', true);
-            //this.galleryFrame.src = "http://";
+            this.galleryFrame.src = "http://";
         },
 
-        frameLoaded: function (item) {
-            item.frameload = "true";
+        frameLoad: function () {
+
+            if (this.galleryFrame.src === "http://") {
+                this.galleryFrame.load = false;
+            } else {
+                this.galleryFrame.load = true;
+            }
+
+            console.log("frame_load: " + this.galleryFrame.load);
         },
 
         setGallerySizes: function () {
@@ -288,12 +295,6 @@ Vue.component("page-gallery", {
                 }
             }
         }
-    },
-    watch: {
-
-        list: function (val, oldval) {
-            //this.setGallerySizes();
-        }
     }
 });
 
@@ -325,9 +326,7 @@ var app = new Vue({
     methods: {
 
         isNav: function (status) {
-            console.log(status);
             this.showNav = status;
-            console.log(this.showNav);
         },
 
         createArray: function (arr) {

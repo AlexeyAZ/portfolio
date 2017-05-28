@@ -12,19 +12,22 @@ script#page-gallery(type="text/x-template")
                 option(v-for="item in columns" :value="item").
                     {{ item }}
         div(@scroll="scrollGalleryList").gallery__list
-            div(v-for="(item, index) in listAr", @mouseover="itemMouseover" :top="item.top", :style="{height: size.item.height + 'px',width: size.item.width + '%'}").gallery__list-item
-                div.gallery__list-btns
+            div(v-for="(item, index) in listAr", :top="item.top", :style="{height: size.item.height + 'px',width: size.item.width + '%'}").gallery__list-item
+                div.gallery__list-links
                     a(v-if="item.gitlink !== 'http://'" :href="item.gitlink" target="_blank").gallery__list-link.gallery__list-link_git
                         i.fa.fa-github
                     a(@click.prevent="openFrame(item)").gallery__list-link.gallery__list-link_frame
                         i.fa.fa-eye
                 transition(name="gallery-img-fade")
                     a(@click="" v-show="galleryImgLoaded(item)" :href="item.href", target="_blank").gallery__list-sitelink
-                        span(:style="'backgroundImage:url(' + item.imgload +')'").gallery__list-img-span
+                        span(:style="'backgroundImage:url(' + item.imgload +')'").gallery__list-img
                         //img(:src="item.imgload", alt="").gallery__list-img
                     //div(v-else="JSON.parse(item.showframe)").gallery__list-frame-wrap
                         div(v-show="JSON.parse(item.frameload) === false ? true : false").gallery__list-frame-loader
                         iframe(@load="frameLoaded(item)" :src="item.href", frameborder="0").gallery__list-frame
         transition(name="frame-fade")
             div(@click="closeFrame" v-show="galleryFrame.show").gallery__frame-wrap
-                iframe(:src="galleryFrame.src", frameborder="0").gallery__frame
+                div.gallery__frame-container
+                    div(@click="closeFrame" :class="galleryFrame.load === true ? 'gallery__frame-close_animate' : ''").gallery__frame-close
+                    div(:class="galleryFrame.load === true ? 'gallery__frame-loader_hide' : ''").gallery__frame-loader
+                    iframe(@load="frameLoad" :src="galleryFrame.src", frameborder="0").gallery__frame
