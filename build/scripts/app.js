@@ -75,7 +75,16 @@ Vue.component("page-gallery", {
             galleryFrame: {
                 load: false,
                 show: false,
-                src: "http://"
+                src: "http://",
+                siteItem: null,
+                offsets: {
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0,
+                    height: 0,
+                    width: 0
+                }
             },
             galleryColumn: null,
             galleryScrollTop: 0,
@@ -160,10 +169,48 @@ Vue.component("page-gallery", {
     },
     methods: {
 
-        openFrame: function (item) {
-            this.galleryFrame.show = true;
-            this.galleryFrame.src = item.href;
+        frameBeforeEnter: function (el) {
             this.$emit('show_nav', false);
+        },
+
+        enter: function (el, done) {
+
+            done();
+        },
+        frameAfterEnter: function (el) {
+            var self = this;
+            var frameContainer = el.querySelector(".gallery__frame-container");
+            frameContainer.style = "";
+
+            setTimeout(function () {
+                self.galleryFrame.src = self.galleryFrame.siteItem.href;
+            }, 1000);
+        },
+
+        openFrame: function (item, event) {
+            this.galleryFrame.siteItem = item;
+            this.galleryFrame.show = true;
+
+            function findParentEl(el, cls) {
+
+                while ((el = el.parentElement) && !el.classList.contains(cls));
+                return el;
+            }
+
+            var elem = findParentEl(event.target, "gallery__list-item");
+            var galleryFrame = this.$el.querySelector(".gallery__frame-container");
+
+            var elemPosition = elem.getBoundingClientRect();
+
+            this.galleryFrame.offsets.height = elem.clientHeight;
+            this.galleryFrame.offsets.width = elem.clientWidth;
+            this.galleryFrame.offsets.top = elemPosition.top;
+            this.galleryFrame.offsets.left = elemPosition.left;
+
+            galleryFrame.style.height = this.galleryFrame.offsets.height + "px";
+            galleryFrame.style.width = this.galleryFrame.offsets.width + "px";
+            galleryFrame.style.top = this.galleryFrame.offsets.top + "px";
+            galleryFrame.style.left = this.galleryFrame.offsets.left + "px";
         },
 
         closeFrame: function () {

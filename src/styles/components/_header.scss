@@ -8,3 +8,17 @@
 		top: 30px;
 	}
 }
+
+.header-nav-enter-active {
+	transition: 1s;
+}
+
+.header-nav-enter, .header-nav-leave-to {
+	transform: translateY(-10px);
+	opacity: 0;
+}
+
+.header-nav-enter-to, .header-nav-leave {
+	transform: translateY(0);
+	opacity: 1;
+}

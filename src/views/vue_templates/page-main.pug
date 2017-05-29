@@ -8,9 +8,10 @@ script#page-main(type="text/x-template")
                 Я занимаюсь версткой с 2014 года.<br>
                 В своих проектах использую следующие инструменты:
             ul.main__skills
-                li(v-for="item in skillsList").main__skills-item
-                    p.
-                        {{ item }}
+                transition-group(name="main-skills")
+                    li(v-for="item in skillsList" v-show="sitelocation === 'main'" :key="item").main__skills-item
+                        p.
+                            {{ item }}
             p.
                 Контакты:
             p.

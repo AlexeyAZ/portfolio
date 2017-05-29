@@ -66,7 +66,7 @@
                 opacity: 1;
 
                 &:hover {
-                    transform: translateX(0) scale(1.1);
+                    //transform: translateX(0) scale(1.1);
                 }
             }
         }
@@ -102,16 +102,11 @@
     }
 
     &__list-link {
-        transition: $content-trans;
-        transform: translateX(-10px);
-        background-color: white;
         background-size: cover;
         background-repeat: no-repeat;
         box-shadow: 0 0 5px rgba(0,0,0,0.5);
-        border-radius: 50%;
         display: inline-block;
         cursor: pointer;
-        color: black;
         font-size: 1.4em;
         pointer-events: auto;
         margin-right: 10px;
@@ -120,7 +115,7 @@
         height: $gallery-list-link-size;
         width: $gallery-list-link-size;
         z-index: 2;
-
+    
         &_git {
             font-size: 2em;
         }
@@ -139,6 +134,13 @@
             left: 50%;
         }
 
+        @for $i from 1 to 10 {
+
+            &:nth-child(#{$i}) {
+                transform: translateX(-20px / $i + 2);
+            }
+        }
+
         @include media(w1024) {
             transform: translateX(0);
             opacity: 1;
@@ -146,6 +148,7 @@
     }
 
     &__frame-wrap {
+        transform: translate3d(0,0,0);
         background-color: rgba(0,0,0,0.7);
         position: absolute;
         top: 0;
@@ -157,6 +160,7 @@
     }
 
     &__frame-container {
+        transition: 1s;
         background-color: white;
         box-shadow: 0 0 8px rgba(255,255,255,0.8), 0 0 6px rgba(255,255,255,0.9), 0 0 4px rgba(255,255,255,1);
         position: absolute;
@@ -167,10 +171,8 @@
     }
 
     &__frame-close {
-        transition: $trans;
         background-color: white;
         box-shadow: 0 0 3px rgba(0,0,0,0.5), 0 0 3px rgba(255,255,255,0.5);
-        border-radius: 50%;
         cursor: pointer;
         position: absolute;
         top: calc(-#{$gallery-frame-close-size} / 4);
@@ -201,7 +203,6 @@
         }
 
         &:hover {
-            background-color: black;
 
             &:before,
             &:after {

@@ -13,9 +13,11 @@
     <div class="wrapper" id="app">
       <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none;"></svg>
       <header class="header">
-        <div class="header__nav" v-show="showNav">
-          <site-nav :navstatus="showNav" :list="links" @link_click="renderLocation" :navlocation="appLocation"></site-nav>
-        </div>
+        <transition name="header-nav">
+          <div class="header__nav" v-show="showNav">
+            <site-nav :navstatus="showNav" :list="links" @link_click="renderLocation" :navlocation="appLocation"></site-nav>
+          </div>
+        </transition>
       </header>
       <div class="content" :class="contentMove ? '' : 'content_move'">
         <!--transition(name="move" mode="out-in")
@@ -50,9 +52,11 @@
             В своих проектах использую следующие инструменты:
           </p>
           <ul class="main__skills">
-            <li class="main__skills-item" v-for="item in skillsList">
-              <p>{{ item }}</p>
-            </li>
+            <transition-group name="main-skills">
+              <li class="main__skills-item" v-for="item in skillsList" v-show="sitelocation === 'main'" :key="item">
+                <p>{{ item }}</p>
+              </li>
+            </transition-group>
           </ul>
           <p>Контакты:</p>
           <p>mail: <a :href="aboutMe.mail"> {{ aboutMe.mail }}</a></p>
@@ -77,7 +81,7 @@
         -->
         <div class="gallery__list" @scroll="scrollGalleryList">
           <div class="gallery__list-item" v-for="(item, index) in listAr" :top="item.top" :style="{height: size.item.height + 'px',width: size.item.width + '%'}">
-            <div class="gallery__list-links"><a class="gallery__list-link gallery__list-link_git" v-if="item.gitlink !== 'http://'" :href="item.gitlink" target="_blank"><i class="fa fa-github"></i></a><a class="gallery__list-link gallery__list-link_frame" @click.prevent="openFrame(item)"><i class="fa fa-eye"></i></a></div>
+            <div class="gallery__list-links"><a class="btn-round gallery__list-link gallery__list-link_git" v-if="item.gitlink !== 'http://'" :href="item.gitlink" target="_blank"><i class="fa fa-github"></i></a><a class="btn-round gallery__list-link gallery__list-link_frame" @click.prevent="openFrame(item, $event)"><i class="fa fa-eye"></i></a></div>
             <transition name="gallery-img-fade"><a class="gallery__list-sitelink" @click="" v-show="galleryImgLoaded(item)" :href="item.href" target="_blank"><span class="gallery__list-img" :style="'backgroundImage:url(' + item.imgload +')'"></span>
                 <!--img(:src="item.imgload", alt="").gallery__list-img--></a>
               <!--div(v-else="JSON.parse(item.showframe)").gallery__list-frame-wrap
@@ -87,10 +91,10 @@
             </transition>
           </div>
         </div>
-        <transition name="frame-fade">
+        <transition name="frame-fade" @before-enter="frameBeforeEnter" @after-enter="frameAfterEnter">
           <div class="gallery__frame-wrap" @click="closeFrame" v-show="galleryFrame.show">
             <div class="gallery__frame-container">
-              <div class="gallery__frame-close" @click="closeFrame" :class="galleryFrame.load === true ? 'gallery__frame-close_animate' : ''"></div>
+              <div class="btn-round gallery__frame-close" @click="closeFrame" :class="galleryFrame.load === true ? 'gallery__frame-close_animate' : ''"></div>
               <div class="gallery__frame-loader" :class="galleryFrame.load === true ? 'gallery__frame-loader_hide' : ''"></div>
               <iframe class="gallery__frame" @load="frameLoad" :src="galleryFrame.src" frameborder="0"></iframe>
             </div>
