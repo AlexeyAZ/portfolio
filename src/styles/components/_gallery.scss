@@ -168,6 +168,10 @@
         left: 5%;
         height: 90%;
         width: 90%;
+
+        &_move {
+            transition: none;
+        }
     }
 
     &__frame-close {

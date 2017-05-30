@@ -1,5 +1,5 @@
 script#page-gallery(type="text/x-template")
-    div(@mousemove="mouseMove($event)" @mouseup="mouseUp($event)").gallery
+    div().gallery
         //div.gallery__system
             div.gallery__system-info.
                 scroll-top: {{ galleryScrollTop }}
@@ -21,13 +21,9 @@ script#page-gallery(type="text/x-template")
                 transition(name="gallery-img-fade")
                     a(@click="" v-show="galleryImgLoaded(item)" :href="item.href", target="_blank").gallery__list-sitelink
                         span(:style="'backgroundImage:url(' + item.imgload +')'").gallery__list-img
-                        //img(:src="item.imgload", alt="").gallery__list-img
-                    //div(v-else="JSON.parse(item.showframe)").gallery__list-frame-wrap
-                        div(v-show="JSON.parse(item.frameload) === false ? true : false").gallery__list-frame-loader
-                        iframe(@load="frameLoaded(item)" :src="item.href", frameborder="0").gallery__list-frame
         transition(name="frame-fade", @before-enter="frameBeforeEnter", @after-enter="frameAfterEnter")
-            div(@click.self="closeFrame" v-show="galleryFrame.show").gallery__frame-wrap
-                div(:style="{width: galleryFrame.move.galleryWidth ? galleryFrame.move.galleryWidth + 'px' : ''}").gallery__frame-container
+            div(@click.self="closeFrame" v-show="galleryFrame.show" @mousemove="mouseMove($event)" @mouseup="mouseUp($event)").gallery__frame-wrap
+                div(:style="{width: galleryFrame.move.galleryWidth ? galleryFrame.move.galleryWidth + 'px' : ''}" :class="galleryFrame.move.cap ? 'gallery__frame-container_move' : ''").gallery__frame-container
                     div(@click="closeFrame($event)" :class="galleryFrame.load === true ? 'gallery__frame-close_animate' : ''").btn-round.gallery__frame-close
                     div(:class="galleryFrame.load === true ? 'gallery__frame-loader_hide' : ''").gallery__frame-loader
                     iframe(@load="frameLoad" :src="galleryFrame.src", frameborder="0").gallery__frame

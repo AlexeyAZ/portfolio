@@ -86,7 +86,7 @@ Vue.component("page-gallery", {
                     width: 0
                 },
                 move: {
-                    galleryDefaultWidth: null,
+                    galleryDefaultLeft: null,
                     documentWidth: null,
                     cap: false,
                     galleryWidth: null,
@@ -239,27 +239,21 @@ Vue.component("page-gallery", {
         },
 
         mouseDown: function(e) {
+            e.preventDefault();
             this.galleryFrame.move.cap = true;
-            this.galleryFrame.move.galleryDefaultWidth = document.querySelector(".gallery__frame-container").clientWidth;
+            this.galleryFrame.move.galleryDefaultLeft = document.querySelector(".gallery__frame-container").getBoundingClientRect().left;
             this.galleryFrame.move.documentWidth = document.documentElement.clientWidth;
+
         },
 
         mouseUp: function(e) {
-            var self = this;
-            console.log(e)
-            
-            setTimeout(function(){
-                self.galleryFrame.move.cap = false;
-            }, 1000);
+            this.galleryFrame.move.cap = false;
         },
 
         mouseMove: function(e) {
-            console.log(this.galleryFrame.move.galleryDefaultWidth)
-            console.log(this.galleryFrame.move.documentWidth)
 
             if (this.galleryFrame.move.cap) {
-                this.galleryFrame.move.galleryWidth = e.clientX - (this.galleryFrame.move.documentWidth - this.galleryFrame.move.galleryDefaultWidth) / 2;
-                console.log("width: " + this.galleryFrame.move.galleryWidth)
+                this.galleryFrame.move.galleryWidth = e.clientX - this.galleryFrame.move.galleryDefaultLeft;
             }
         },
 

@@ -65,7 +65,7 @@
       </div>
     </script>
     <script id="page-gallery" type="text/x-template">
-      <div class="gallery" @mousemove="mouseMove($event)" @mouseup="mouseUp($event)">
+      <div class="gallery">
         <!--div.gallery__system
         div.gallery__system-info.
             scroll-top: {{ galleryScrollTop }}
@@ -82,18 +82,12 @@
         <div class="gallery__list" @scroll="scrollGalleryList">
           <div class="gallery__list-item" v-for="(item, index) in listAr" :top="item.top" :style="{height: size.item.height + 'px',width: size.item.width + '%'}">
             <div class="gallery__list-links"><a class="btn-round gallery__list-link gallery__list-link_git" v-if="item.gitlink !== 'http://'" :href="item.gitlink" target="_blank"><i class="fa fa-github"></i></a><a class="btn-round gallery__list-link gallery__list-link_frame" @click.prevent="openFrame(item, $event)"><i class="fa fa-eye"></i></a></div>
-            <transition name="gallery-img-fade"><a class="gallery__list-sitelink" @click="" v-show="galleryImgLoaded(item)" :href="item.href" target="_blank"><span class="gallery__list-img" :style="'backgroundImage:url(' + item.imgload +')'"></span>
-                <!--img(:src="item.imgload", alt="").gallery__list-img--></a>
-              <!--div(v-else="JSON.parse(item.showframe)").gallery__list-frame-wrap
-              div(v-show="JSON.parse(item.frameload) === false ? true : false").gallery__list-frame-loader
-              iframe(@load="frameLoaded(item)" :src="item.href", frameborder="0").gallery__list-frame
-              -->
-            </transition>
+            <transition name="gallery-img-fade"><a class="gallery__list-sitelink" @click="" v-show="galleryImgLoaded(item)" :href="item.href" target="_blank"><span class="gallery__list-img" :style="'backgroundImage:url(' + item.imgload +')'"></span></a></transition>
           </div>
         </div>
         <transition name="frame-fade" @before-enter="frameBeforeEnter" @after-enter="frameAfterEnter">
-          <div class="gallery__frame-wrap" @click.self="closeFrame" v-show="galleryFrame.show">
-            <div class="gallery__frame-container" :style="{width: galleryFrame.move.galleryWidth ? galleryFrame.move.galleryWidth + 'px' : ''}">
+          <div class="gallery__frame-wrap" @click.self="closeFrame" v-show="galleryFrame.show" @mousemove="mouseMove($event)" @mouseup="mouseUp($event)">
+            <div class="gallery__frame-container" :style="{width: galleryFrame.move.galleryWidth ? galleryFrame.move.galleryWidth + 'px' : ''}" :class="galleryFrame.move.cap ? 'gallery__frame-container_move' : ''">
               <div class="btn-round gallery__frame-close" @click="closeFrame($event)" :class="galleryFrame.load === true ? 'gallery__frame-close_animate' : ''"></div>
               <div class="gallery__frame-loader" :class="galleryFrame.load === true ? 'gallery__frame-loader_hide' : ''"></div>
               <iframe class="gallery__frame" @load="frameLoad" :src="galleryFrame.src" frameborder="0"></iframe>
