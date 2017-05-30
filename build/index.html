@@ -65,7 +65,7 @@
       </div>
     </script>
     <script id="page-gallery" type="text/x-template">
-      <div class="gallery">
+      <div class="gallery" @mousemove="mouseMove($event)" @mouseup="mouseUp($event)">
         <!--div.gallery__system
         div.gallery__system-info.
             scroll-top: {{ galleryScrollTop }}
@@ -92,11 +92,13 @@
           </div>
         </div>
         <transition name="frame-fade" @before-enter="frameBeforeEnter" @after-enter="frameAfterEnter">
-          <div class="gallery__frame-wrap" @click="closeFrame" v-show="galleryFrame.show">
-            <div class="gallery__frame-container">
-              <div class="btn-round gallery__frame-close" @click="closeFrame" :class="galleryFrame.load === true ? 'gallery__frame-close_animate' : ''"></div>
+          <div class="gallery__frame-wrap" @click.self="closeFrame" v-show="galleryFrame.show">
+            <div class="gallery__frame-container" :style="{width: galleryFrame.move.galleryWidth ? galleryFrame.move.galleryWidth + 'px' : ''}">
+              <div class="btn-round gallery__frame-close" @click="closeFrame($event)" :class="galleryFrame.load === true ? 'gallery__frame-close_animate' : ''"></div>
               <div class="gallery__frame-loader" :class="galleryFrame.load === true ? 'gallery__frame-loader_hide' : ''"></div>
               <iframe class="gallery__frame" @load="frameLoad" :src="galleryFrame.src" frameborder="0"></iframe>
+              <div class="gallery__frame-move" @mousedown="mouseDown($event)"></div>
+              <div class="gallery__frame-cap" v-show="galleryFrame.move.cap"></div>
             </div>
           </div>
         </transition>

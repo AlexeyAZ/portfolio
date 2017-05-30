@@ -84,7 +84,13 @@ Vue.component("page-gallery", {
                     left: 0,
                     height: 0,
                     width: 0
-                }
+                },
+                move: {
+                    galleryDefaultWidth: null,
+                    documentWidth: null,
+                    cap: false,
+                    galleryWidth: null,
+                },
             },
             galleryColumn: null,
             galleryScrollTop: 0,
@@ -222,11 +228,39 @@ Vue.component("page-gallery", {
             galleryFrame.style.left = this.galleryFrame.offsets.left + "px";
         },
 
-        closeFrame: function() {
-            this.galleryFrame.show = false;
-            this.galleryFrame.load = false;
-            this.$emit('show_nav', true);
-            this.galleryFrame.src = "http://";
+        closeFrame: function(e) {
+
+            if(!e.target.classList.contains("gallery__frame-container")) {
+                this.galleryFrame.show = false;
+                this.galleryFrame.load = false;
+                this.$emit('show_nav', true);
+                this.galleryFrame.src = "http://";
+            }
+        },
+
+        mouseDown: function(e) {
+            this.galleryFrame.move.cap = true;
+            this.galleryFrame.move.galleryDefaultWidth = document.querySelector(".gallery__frame-container").clientWidth;
+            this.galleryFrame.move.documentWidth = document.documentElement.clientWidth;
+        },
+
+        mouseUp: function(e) {
+            var self = this;
+            console.log(e)
+            
+            setTimeout(function(){
+                self.galleryFrame.move.cap = false;
+            }, 1000);
+        },
+
+        mouseMove: function(e) {
+            console.log(this.galleryFrame.move.galleryDefaultWidth)
+            console.log(this.galleryFrame.move.documentWidth)
+
+            if (this.galleryFrame.move.cap) {
+                this.galleryFrame.move.galleryWidth = e.clientX - (this.galleryFrame.move.documentWidth - this.galleryFrame.move.galleryDefaultWidth) / 2;
+                console.log("width: " + this.galleryFrame.move.galleryWidth)
+            }
         },
 
         frameLoad: function() {
@@ -236,8 +270,6 @@ Vue.component("page-gallery", {
             } else {
                 this.galleryFrame.load = true;
             }
-
-            console.log("frame_load: " + this.galleryFrame.load)
         },
 
         setGallerySizes: function() {
