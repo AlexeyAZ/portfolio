@@ -87,12 +87,12 @@
         </div>
         <transition name="frame-fade" @before-enter="frameBeforeEnter" @after-enter="frameAfterEnter">
           <div class="gallery__frame-wrap" @click.self="closeFrame" v-show="galleryFrame.show" @mousemove="mouseMove($event)" @mouseup="mouseUp($event)">
-            <div class="gallery__frame-container" :style="{width: galleryFrame.move.galleryWidth ? galleryFrame.move.galleryWidth + 'px' : ''}" :class="galleryFrame.move.cap ? 'gallery__frame-container_move' : ''">
+            <div class="gallery__frame-container" :style="{width: galleryFrame.move.galleryWidth ? galleryFrame.move.galleryWidth + 'px' : ''}" :class="galleryFrame.move.mouseDown ? 'gallery__frame-container_move' : ''">
               <div class="btn-round gallery__frame-close" @click="closeFrame($event)" :class="galleryFrame.load === true ? 'gallery__frame-close_animate' : ''"></div>
               <div class="gallery__frame-loader" :class="galleryFrame.load === true ? 'gallery__frame-loader_hide' : ''"></div>
               <iframe class="gallery__frame" @load="frameLoad" :src="galleryFrame.src" frameborder="0"></iframe>
-              <div class="gallery__frame-move" @mousedown="mouseDown($event)"></div>
-              <div class="gallery__frame-cap" v-show="galleryFrame.move.cap"></div>
+              <div class="gallery__frame-resize" @mousedown="mouseDown($event)" :class="galleryFrame.move.mouseDown ? 'gallery__frame-resize_active' : ''"></div>
+              <div class="gallery__frame-cap" v-show="galleryFrame.move.mouseDown"></div>
             </div>
           </div>
         </transition>

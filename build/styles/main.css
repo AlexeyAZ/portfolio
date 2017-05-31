@@ -2820,7 +2820,7 @@ body {
     height: 100%;
     width: 100%;
     z-index: 1; }
-  .gallery__frame-move {
+  .gallery__frame-resize {
     transition: all 0.3s ease;
     background-color: black;
     cursor: e-resize;
@@ -2830,10 +2830,12 @@ body {
     height: 100%;
     width: 6px;
     z-index: 2; }
-    .gallery__frame-move:hover {
+    .gallery__frame-resize_active {
+      background-color: greenyellow; }
+    .gallery__frame-resize:hover {
       background-color: greenyellow; }
     @media only screen and (max-width: 1024px) {
-      .gallery__frame-move {
+      .gallery__frame-resize {
         display: none; } }
   .gallery__frame-cap {
     position: absolute;
